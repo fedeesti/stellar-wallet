@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
