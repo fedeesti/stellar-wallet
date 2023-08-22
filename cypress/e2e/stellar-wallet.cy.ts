@@ -5,6 +5,15 @@ beforeEach(() => {
 });
 
 describe('UI Layout', () => {
+  describe('Navbar', () => {
+    it('should show a navbar', () => {
+      cy.get('[data-cy="nav-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="nav-logo"]').should('be.visible').and('have.attr', 'alt', 'Stellar Logo');
+      cy.get('[data-cy="nav-logo-link"]')
+        .should('be.visible')
+        .and('have.attr', 'href', Cypress.env('URL_STELLAR'));
+    });
+  });
   describe('Footer', () => {
     it('should show a footer', () => {
       const UrlStellarTermsOfService = `${Cypress.env('URL_STELLAR')}${Cypress.env(
