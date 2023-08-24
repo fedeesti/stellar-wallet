@@ -99,6 +99,60 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
         cy.get('[data-cy="login-secret-key-container"]').should('not.exist');
       });
+      it('when clicking on continue in the warning modal, should show the login modal', () => {
+        const urlAccountViewer = 'https://accountviewer.stellar.org';
+
+        cy.get('[data-cy="home-connect-secret-key"]').click();
+        cy.get('[data-cy="warning-accept-terms"] > input').check();
+        cy.get('[data-cy="warning-btn-continue"]').click();
+
+        cy.get('[data-cy="warning-login-container"]').should('not.exist');
+        cy.get('[data-cy="login-secret-key-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="login-secret-key-info-svg"]').should('exist').and('be.visible');
+        cy.get('[data-cy="login-secret-key-description"]').should('exist').and('be.visible');
+        cy.get('[data-cy="login-secret-key-acount-viewer-url"]')
+          .should('be.visible')
+          .and('contain', urlAccountViewer)
+          .and('have.attr', 'href', urlAccountViewer);
+        cy.get('[data-cy="login-secret-key-form"]').should('exist').and('be.visible');
+        cy.get('[data-cy="login-secret-key-form"]').find('label').contains('YOUR SECRET KEY');
+        cy.get('[data-cy="login-secret-key-form"]').find('input').should('be.visible');
+        cy.get('[data-cy="login-secret-key-form-errors"]').should('not.exist');
+        cy.get('[data-cy="login-secret-key-btn-connect"]')
+          .should('exist')
+          .and('contain', 'Connect');
+      });
+      it('when the secret key is invalid, should show a error message', () => {
+        const invalidSecretKeys = [
+          'hello',
+          '1234',
+          'JOUTRBOUJGVFOFRKRQT2BZN',
+          'GVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRFSANEPI74NFPALZ4JOUTRBOUJ',
+        ];
+        const errorMessage =
+          'Invalid secret key. Secret keys are uppercase and begin with the letter "S."';
+
+        cy.get('[data-cy="home-connect-secret-key"]').click();
+        cy.get('[data-cy="warning-accept-terms"] > input').check();
+        cy.get('[data-cy="warning-btn-continue"]').click();
+
+        cy.get('[data-cy="warning-login-container"]').should('not.exist');
+        cy.get('[data-cy="login-secret-key-container"]').should('exist').and('be.visible');
+
+        cy.get('[data-cy="login-secret-key-btn-connect"]').click();
+        cy.get('[data-cy="login-secret-key-form-errors"]')
+          .should('exist')
+          .and('contain', 'Please enter your secret key');
+
+        for (let i = 0; i < invalidSecretKeys.length; i++) {
+          cy.get('[data-cy="login-secret-key-form"]').find('input').type(invalidSecretKeys[i]);
+          cy.get('[data-cy="login-secret-key-btn-connect"]').click();
+          cy.get('[data-cy="login-secret-key-form-errors"]')
+            .should('exist')
+            .and('contain', errorMessage);
+          cy.get('[data-cy="login-secret-key-form"]').find('input').clear();
+        }
+      });
     });
   });
 });
