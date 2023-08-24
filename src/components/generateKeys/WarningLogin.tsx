@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 interface IProps {
   onClose: () => void;
+  changeContent: () => void;
 }
 
-function WarningLogin({ onClose }: IProps) {
+function WarningLogin({ onClose, changeContent }: IProps) {
   const [secretKeyAccept, setSecretKeyAccept] = useState<boolean>(false);
   return (
     <div data-cy="warning-login-container">
@@ -50,6 +51,7 @@ function WarningLogin({ onClose }: IProps) {
         <button
           type="button"
           disabled={!secretKeyAccept}
+          onClick={changeContent}
           data-cy="warning-btn-continue"
           className={`text-stellar-gray-200 bg-stellar-violet-700 font-medium rounded text-sm px-5 py-2.5 text-center ${
             secretKeyAccept ? 'hover:bg-stellar-violet-500 cursor-pointer' : 'cursor-not-allowed'
