@@ -11,8 +11,9 @@ function Modal({ closeModal }: IProps) {
       onClick={closeModal}
     >
       <div
-        className="absolute w-4/5 max-w-[600px] bg-stellar-gray-900 z-[calc(30+1)] overflow-hidden -translate-x-2/4 translate-y-[-35%] mt-0 pt-14 pb-8 px-6 rounded-lg left-2/4 top-[35%]"
+        data-cy="modal-container"
         onClick={(e) => e.stopPropagation()}
+        className="absolute w-4/5 max-w-[600px] bg-stellar-gray-900 z-[calc(30+1)] overflow-hidden -translate-x-2/4 translate-y-[-35%] mt-0 pt-14 pb-8 px-6 rounded-lg left-2/4 top-[35%]"
       >
         <div className="absolute cursor-pointer right-3 top-4">
           <button
