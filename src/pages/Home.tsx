@@ -3,9 +3,19 @@ import Modal from '../components/modal/Modal';
 
 function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [contentModal, setContentModal] = useState<string>('');
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handleSecretKeyLogin = () => {
+    setContentModal('secret');
+  };
+
+  const handleWarningLogin = () => {
+    setShowModal(true);
+    setContentModal('warning');
   };
 
   return (
@@ -20,7 +30,7 @@ function Home() {
               <button
                 className="group h-12 px-6"
                 data-cy="home-connect-secret-key"
-                onClick={() => setShowModal(true)}
+                onClick={handleWarningLogin}
               >
                 <div className="relative flex items-center space-x-4 justify-center">
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline">
@@ -32,7 +42,13 @@ function Home() {
           </div>
         </div>
       </div>
-      {showModal && <Modal closeModal={closeModal} />}
+      {showModal && (
+        <Modal
+          content={contentModal}
+          changeContent={handleSecretKeyLogin}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 }
