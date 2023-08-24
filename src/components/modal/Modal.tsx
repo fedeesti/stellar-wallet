@@ -1,10 +1,13 @@
+import SecretKeyLogin from '../generateKeys/SecretKeyLogin';
 import WarningLogin from '../generateKeys/WarningLogin';
 
 interface IProps {
+  content: string;
+  changeContent: () => void;
   closeModal: () => void;
 }
 
-function Modal({ closeModal }: IProps) {
+function Modal({ content, changeContent, closeModal }: IProps) {
   return (
     <div
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-gray-100 bg-stellar-black/90"
@@ -44,7 +47,11 @@ function Modal({ closeModal }: IProps) {
           <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
             Connect with a secret key
           </h3>
-          <WarningLogin onClose={closeModal} />
+          {content === 'warning' ? (
+            <WarningLogin onClose={closeModal} changeContent={changeContent} />
+          ) : (
+            <SecretKeyLogin />
+          )}
         </div>
       </div>
     </div>
