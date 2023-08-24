@@ -40,7 +40,10 @@ function Modal({ closeModal }: IProps) {
             <span className="sr-only">Close modal</span>
           </button>
         </div>
-        <div className="overflow-y-auto max-h-[70vh]">
+        <div className="overflow-y-auto max-h-[70vh] space-y-6">
+          <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
+            Connect with a secret key
+          </h3>
           <WarningLogin onClose={closeModal} />
         </div>
       </div>
