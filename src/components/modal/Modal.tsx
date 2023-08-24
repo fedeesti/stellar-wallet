@@ -1,3 +1,5 @@
+import WarningLogin from '../generateKeys/WarningLogin';
+
 interface IProps {
   closeModal: () => void;
 }
@@ -5,7 +7,7 @@ interface IProps {
 function Modal({ closeModal }: IProps) {
   return (
     <div
-      className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
+      className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-gray-100 bg-stellar-black/90"
       onClick={closeModal}
     >
       <div
@@ -37,7 +39,9 @@ function Modal({ closeModal }: IProps) {
             <span className="sr-only">Close modal</span>
           </button>
         </div>
-        <div className="overflow-y-auto max-h-[70vh]">Modal</div>
+        <div className="overflow-y-auto max-h-[70vh]">
+          <WarningLogin onClose={closeModal} />
+        </div>
       </div>
     </div>
   );
