@@ -61,4 +61,14 @@ describe('UI Layout', () => {
         .and('have.attr', 'href', Cypress.env('URL_GITHUB_REPO'));
     });
   });
+
+  describe('Generate key pair for a new account', () => {
+    it('when clicking on the button, should show a modal', () => {
+      cy.get('[data-cy="home-generate-keypair"]').click();
+
+      cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="modal-btn-close"]').should('be.visible');
+      cy.get('[data-cy="modal-title"]').should('be.visible').contains('Modal');
+    });
+  });
 });
