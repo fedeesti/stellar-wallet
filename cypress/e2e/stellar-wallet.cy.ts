@@ -14,6 +14,16 @@ describe('UI Layout', () => {
         .and('have.attr', 'href', Cypress.env('URL_STELLAR'));
     });
   });
+  describe('Home page', () => {
+    it('should show a home page with different options to connect to the wallet', () => {
+      cy.get('[data-cy="home-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="home-title"]').should('be.visible').and('contain', 'Connect with a wallet');
+      cy.get('[data-cy="home-button-list-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="home-generate-keypair"]')
+        .should('be.visible')
+        .and('contain', 'Generate key pair for a new account');
+    });
+  });
   describe('Footer', () => {
     it('should show a footer', () => {
       const UrlStellarTermsOfService = `${Cypress.env('URL_STELLAR')}${Cypress.env(
