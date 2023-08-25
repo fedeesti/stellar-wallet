@@ -78,5 +78,49 @@ describe('UI Layout', () => {
       cy.get('[data-cy="confirm-generate-btn-continue"]').should('exist').and('be.visible');
       cy.get('[data-cy="confirm-generate-btn-cancel"]').should('exist').and('be.visible');
     });
+    it('when clicking on continue in the confirm modal, should show the generated keypair', () => {
+      cy.get('[data-cy="home-generate-keypair"]').click();
+      cy.get('[data-cy="confirm-generate-btn-continue"]').click();
+
+      cy.get('[data-cy="modal-confirm-generate-container"]').should('not.exist');
+      cy.get('[data-cy="modal-generate-keypair-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="modal-title"]').should('be.visible').contains('Generate a new keypair');
+      cy.get('[data-cy="generate-keypair-description-container"]')
+        .should('exist')
+        .and('be.visible');
+
+      cy.get('[data-cy="generate-keypair-public-container"]').find('h4').contains('PUBLIC KEY');
+      cy.get('[data-cy="generate-keypair-secret-container"]').find('h4').contains('SECRET KEY');
+
+      cy.get('[data-cy="generate-keypair-copy-text-container"]').should('exist');
+      cy.get('[data-cy="generate-keypair-error-message"]').should('not.exist');
+      cy.get('[data-cy="generate-keypair-stored-container"]').should('exist');
+      cy.get('[data-cy="generate-keypair-btn-close"]').should('exist').contains('Close');
+    });
+    it('when not accepting to have saved the private key in a safe place, should show an error message', () => {
+      cy.get('[data-cy="home-generate-keypair"]').click();
+      cy.get('[data-cy="confirm-generate-btn-continue"]').click();
+      cy.get('[data-cy="generate-keypair-error-message"]').should('not.exist');
+
+      cy.get('[data-cy="generate-keypair-btn-close"]').click();
+      cy.get('[data-cy="generate-keypair-error-message"]')
+        .should('exist')
+        .and('be.visible')
+        .contains('Please confirm that you have copied and stored your secret key');
+    });
+    it('the error message should go away when you accept that you have saved the private key in a safe place', () => {
+      cy.get('[data-cy="home-generate-keypair"]').click();
+      cy.get('[data-cy="confirm-generate-btn-continue"]').click();
+      cy.get('[data-cy="generate-keypair-error-message"]').should('not.exist');
+
+      cy.get('[data-cy="generate-keypair-btn-close"]').click();
+      cy.get('[data-cy="generate-keypair-error-message"]')
+        .should('exist')
+        .and('be.visible')
+        .contains('Please confirm that you have copied and stored your secret key');
+
+      cy.get('[data-cy="generate-keypair-stored-container"]').find('input').check();
+      cy.get('[data-cy="generate-keypair-error-message"]').should('not.exist');
+    });
   });
 });
