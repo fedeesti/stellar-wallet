@@ -1,3 +1,5 @@
+import ConfirmGenerate from '../generateKeys/ConfirmGenerate';
+
 interface IProps {
   closeModal: () => void;
 }
@@ -39,7 +41,7 @@ function Modal({ closeModal }: IProps) {
           </button>
         </div>
         <div className="overflow-y-auto max-h-[70vh]" data-cy="modal-title">
-          Modal
+          <ConfirmGenerate onClose={closeModal} />
         </div>
       </div>
     </div>
