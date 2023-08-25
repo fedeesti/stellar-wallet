@@ -50,15 +50,15 @@ function GenerateKeypair() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-cy="modal-generate-keypair-container">
       <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
         Generate a new keypair
       </h3>
       <div
         className="flex flex-row gap-1 mb-6 p-4 rounded border-2 border-stellar-red-700 bg-stellar-red-800"
-        data-cy="confirm-generate-description-container"
+        data-cy="generate-keypair-description-container"
       >
-        <div className="pt-[0.4rem]" data-cy="confirm-generate-warning-svg">
+        <div className="pt-[0.4rem]" data-cy="generate-keypair-warning-svg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -75,7 +75,7 @@ function GenerateKeypair() {
             <path d="M15 9l-6 6M9 9l6 6"></path>
           </svg>
         </div>
-        <div data-cy="confirm-generate-description">
+        <div data-cy="generate-keypair-description">
           <h3 className="pb-3 text-lg leading-relaxed ">ATTENTION:</h3>
           <ul className="pl-4">
             <li className="pb-2 text-base font-thin list-disc">
@@ -103,14 +103,14 @@ function GenerateKeypair() {
           </ul>
         </div>
       </div>
-      <div className="mb-4">
-        <div className="mb-6">
+      <div className="mb-4" data-cy="generate-keypair-keys-container">
+        <div className="mb-6" data-cy="generate-keypair-public-container">
           <h4 className="text-sm font-medium mb-2">PUBLIC KEY</h4>
           <code className="break-words bg-[#303448] text-sm border border-solid border-[#3a3e4d] rounded-sm px-1 py-0.5">
             GDRU64ATGPDM2EVNOIVVM3P3X55LT5FLUA6XMD55IYACPDDVUWZ5BQTW
           </code>
         </div>
-        <div className="mb-6">
+        <div className="mb-6" data-cy="generate-keypair-secret-container">
           <h4 className="text-sm font-medium mb-2">SECRET KEY</h4>
           <code className="break-words bg-[#303448] text-sm border border-solid border-[#3a3e4d] rounded-sm px-1 py-0.5">
             SBZK3IZGHIM3GP2I4K32QVSWBNVUAD2KL6VMUQOQEMXAIWNXDU7KRTAD
@@ -118,10 +118,11 @@ function GenerateKeypair() {
         </div>
       </div>
       <div>
-        <div className="flex gap-2 flex-row">
+        <div className="flex gap-2 flex-row" data-cy="generate-keypair-copy-text-container">
           <button
             className="inline-flex gap-1.5 items-center"
             onClick={() => copyToClipboard(textToCopy)}
+            data-cy="generate-keypair-btn-copy-keys"
           >
             <span className="text-sm">Copy keys</span>
             <svg
@@ -141,18 +142,21 @@ function GenerateKeypair() {
             </svg>
           </button>
           {isCopied && (
-            <p className="ml-3 whitespace-nowrap rounded bg-stellar-dark-violet py-[6px] px-4 text-sm font-semibold">
+            <p
+              data-cy="generate-keypair-tooltip-copied"
+              className="ml-3 whitespace-nowrap rounded bg-stellar-dark-violet py-[6px] px-4 text-sm font-semibold"
+            >
               Copied
             </p>
           )}
         </div>
       </div>
       {error.status && (
-        <p className="text-stellar-red-400 font-normal" data-cy="login-secret-key-form-errors">
+        <p className="text-stellar-red-400 font-normal" data-cy="generate-keypair-error-message">
           {error.message}
         </p>
       )}
-      <div className="flex gap-2 items-baseline pt-3" data-cy="warning-accept-terms">
+      <div className="flex gap-2 items-baseline pt-3" data-cy="generate-keypair-stored-container">
         <input
           type="checkbox"
           name="secret-key-accept"
@@ -164,7 +168,7 @@ function GenerateKeypair() {
       <div className="flex items-center p-6 space-x-2 justify-end">
         <button
           type="button"
-          data-cy="confirm-generate-btn-close"
+          data-cy="generate-keypair-btn-close"
           onClick={() => connectAWallet()}
           className="text-stellar-violet-700 hover:bg-stellar-violet-700 hover:text-stellar-gray-200 rounded border border-stellar-violet-700 text-sm font-medium px-5 py-2.5"
         >

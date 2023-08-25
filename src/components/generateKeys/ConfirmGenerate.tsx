@@ -5,7 +5,7 @@ interface IProps {
 
 function ConfirmGenerate({ onClose, changeContent }: IProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-cy="modal-confirm-generate-container">
       <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
         Generate a new keypair
       </h3>
