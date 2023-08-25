@@ -1,10 +1,13 @@
 import ConfirmGenerate from '../generateKeys/ConfirmGenerate';
+import GenerateKeypair from '../generateKeys/GenerateKeypair';
 
 interface IProps {
+  content: string;
+  changeContent: () => void;
   closeModal: () => void;
 }
 
-function Modal({ closeModal }: IProps) {
+function Modal({ content, changeContent, closeModal }: IProps) {
   return (
     <div
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
@@ -41,7 +44,11 @@ function Modal({ closeModal }: IProps) {
           </button>
         </div>
         <div className="overflow-y-auto max-h-[70vh]" data-cy="modal-title">
-          <ConfirmGenerate onClose={closeModal} />
+          {content === 'confirm' ? (
+            <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
+          ) : (
+            <GenerateKeypair />
+          )}
         </div>
       </div>
     </div>

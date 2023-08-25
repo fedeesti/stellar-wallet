@@ -3,14 +3,21 @@ import Modal from '../components/modal/Modal';
 
 function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  const openModal = () => {
-    setShowModal(true);
-  };
+  const [contentModal, setContentModal] = useState<string>('');
 
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const handleGenerateKeypair = () => {
+    setContentModal('');
+  };
+
+  const handleGenerateConfirm = () => {
+    setShowModal(true);
+    setContentModal('confirm');
+  };
+
   return (
     <div className="relative py-16">
       <div className="relative container m-auto px-6 md:px-12 xl:px-40" data-cy="home-container">
@@ -23,7 +30,7 @@ function Home() {
               <button
                 className="group h-12 px-6"
                 data-cy="home-generate-keypair"
-                onClick={openModal}
+                onClick={handleGenerateConfirm}
               >
                 <div className="relative flex items-center space-x-4 justify-center">
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline hover:no-underline">
@@ -35,7 +42,13 @@ function Home() {
           </div>
         </div>
       </div>
-      {showModal && <Modal closeModal={closeModal} />}
+      {showModal && (
+        <Modal
+          content={contentModal}
+          changeContent={handleGenerateKeypair}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 }

@@ -1,8 +1,9 @@
 interface IProps {
   onClose: () => void;
+  changeContent: () => void;
 }
 
-function ConfirmGenerate({ onClose }: IProps) {
+function ConfirmGenerate({ onClose, changeContent }: IProps) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
@@ -47,6 +48,7 @@ function ConfirmGenerate({ onClose }: IProps) {
         <button
           type="button"
           data-cy="confirm-generate-btn-continue"
+          onClick={changeContent}
           className="text-stellar-gray-200 bg-stellar-violet-700 font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-violet-500 cursor-pointer"
         >
           Continue
