@@ -1,4 +1,16 @@
+import { useState } from 'react';
+import Modal from '../components/modal/Modal';
+
 function Home() {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
   return (
     <div className="relative py-16">
       <div className="relative container m-auto px-6 md:px-12 xl:px-40" data-cy="home-container">
@@ -8,7 +20,11 @@ function Home() {
               Connect with a wallet
             </h2>
             <div className="mt-16 grid space-y-4" data-cy="home-button-list-container">
-              <button className="group h-12 px-6" data-cy="home-generate-keypair">
+              <button
+                className="group h-12 px-6"
+                data-cy="home-generate-keypair"
+                onClick={openModal}
+              >
                 <div className="relative flex items-center space-x-4 justify-center">
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline hover:no-underline">
                     Generate key pair for a new account
@@ -19,6 +35,7 @@ function Home() {
           </div>
         </div>
       </div>
+      {showModal && <Modal closeModal={closeModal} />}
     </div>
   );
 }
