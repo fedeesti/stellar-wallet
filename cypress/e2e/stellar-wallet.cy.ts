@@ -63,12 +63,20 @@ describe('UI Layout', () => {
   });
 
   describe('Generate key pair for a new account', () => {
-    it('when clicking on the button, should show a modal', () => {
+    it('when clicking on the button, should show a modal with a confirm', () => {
       cy.get('[data-cy="home-generate-keypair"]').click();
 
       cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
       cy.get('[data-cy="modal-btn-close"]').should('be.visible');
-      cy.get('[data-cy="modal-title"]').should('be.visible').contains('Modal');
+      cy.get('[data-cy="modal-title"]').should('be.visible').contains('Generate a new keypair');
+
+      cy.get('[data-cy="confirm-generate-description-container"]')
+        .should('exist')
+        .and('be.visible');
+      cy.get('[data-cy="confirm-generate-warning-svg"]').should('exist').and('be.visible');
+      cy.get('[data-cy="confirm-generate-description"]').should('exist').and('be.visible');
+      cy.get('[data-cy="confirm-generate-btn-continue"]').should('exist').and('be.visible');
+      cy.get('[data-cy="confirm-generate-btn-cancel"]').should('exist').and('be.visible');
     });
   });
 });
