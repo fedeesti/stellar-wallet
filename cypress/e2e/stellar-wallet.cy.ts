@@ -52,3 +52,19 @@ describe('UI Layout', () => {
     });
   });
 });
+
+describe('Dashboard Wallet', () => {
+  describe('Balance information section', () => {
+    it('should show your balance in XLM', () => {
+      cy.get('[data-cy="dashboard-main-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-balance-section-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-balance-information"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-balance-information"]').find('h3').contains('Your Balance');
+      cy.get('[data-cy="dashboard-balance-information"]').find('p').contains('Lumens (XLM)');
+
+      cy.get('[data-cy="dashboard-balance-btn-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-balance-btn-send"]').should('be.visible').contains('Send');
+      cy.get('[data-cy="dashboard-balance-btn-receive"]').should('be.visible').contains('Receive');
+    });
+  });
+});

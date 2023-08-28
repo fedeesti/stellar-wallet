@@ -1,15 +1,18 @@
 function DashboardWallet() {
   return (
-    <main className="text-stellar-ghostwhite">
-      <section className="my-8 px-8 bg-[#303448]">
+    <main className="text-stellar-ghostwhite" data-cy="dashboard-main-container">
+      <section className="my-8 px-8 bg-[#303448]" data-cy="dashboard-balance-section-container">
         <div className="px-12 my-o mx-auto max-w-7xl w-full">
           <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-            <div className="mb-8 lg:mb-0 text-center">
+            <div className="mb-8 lg:mb-0 text-center" data-cy="dashboard-balance-information">
               <h3 className="mb-2 font-normal text-4xl">Your Balance</h3>
               <p className="text-4xl font-medium mt-2">0 Lumens (XLM)</p>
             </div>
-            <div className="flex items-center gap-6">
-              <button className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet inline-flex items-center focus:outline-none text-center text-base font-medium">
+            <div className="flex items-center gap-6" data-cy="dashboard-balance-btn-container">
+              <button
+                className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet inline-flex items-center focus:outline-none text-center text-base font-medium"
+                data-cy="dashboard-balance-btn-send"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -26,7 +29,10 @@ function DashboardWallet() {
                 </svg>
                 Send
               </button>
-              <button className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet inline-flex items-center focus:outline-none text-center text-base font-medium">
+              <button
+                className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet inline-flex items-center focus:outline-none text-center text-base font-medium"
+                data-cy="dashboard-balance-btn-receive"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
