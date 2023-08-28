@@ -9,7 +9,7 @@ function BalanceInfo() {
           </div>
           <div className="flex items-center gap-6" data-cy="dashboard-balance-btn-container">
             <button
-              className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet inline-flex items-center focus:outline-none text-center text-base font-medium"
+              className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet hover:bg-[#937eef] inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-red-600/20 transition-all hover:shadow-lg hover:shadow-red-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-cy="dashboard-balance-btn-send"
             >
               <svg
@@ -29,7 +29,7 @@ function BalanceInfo() {
               Send
             </button>
             <button
-              className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet inline-flex items-center focus:outline-none text-center text-base font-medium"
+              className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet hover:bg-[#937eef] inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-red-600/20 transition-all hover:shadow-lg hover:shadow-red-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-cy="dashboard-balance-btn-receive"
             >
               <svg
