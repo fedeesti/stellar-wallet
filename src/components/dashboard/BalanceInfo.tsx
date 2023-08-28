@@ -1,6 +1,6 @@
 function BalanceInfo() {
   return (
-    <>
+    <div className="px-12 my-o mx-auto max-w-7xl w-full">
       <div className="flex flex-col items-center lg:flex-row lg:justify-between">
         <div className="mb-8 lg:mb-0 text-center" data-cy="dashboard-balance-information">
           <h3 className="mb-2 font-normal text-4xl">Your Balance</h3>
@@ -52,7 +52,7 @@ function BalanceInfo() {
           GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF
         </code>
       </div>
-    </>
+    </div>
   );
 }
 
