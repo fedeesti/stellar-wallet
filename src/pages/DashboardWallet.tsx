@@ -1,4 +1,5 @@
 import BalanceInfo from '../components/dashboard/BalanceInfo';
+import PaymentsHistory from '../components/dashboard/PaymentsHistory';
 
 function DashboardWallet() {
   return (
@@ -6,6 +7,7 @@ function DashboardWallet() {
       <section className="my-8 p-8 bg-[#303448]" data-cy="dashboard-balance-section-container">
         <BalanceInfo />
       </section>
+      <PaymentsHistory />
     </main>
   );
 }
