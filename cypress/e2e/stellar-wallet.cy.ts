@@ -82,7 +82,7 @@ describe('Dashboard Wallet', () => {
         });
     });
   });
-  describe('', () => {
+  describe('Payments History', () => {
     it('should show your payments history', () => {
       const theadArray = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'MEMO', 'OPERATION ID'];
 
@@ -104,6 +104,20 @@ describe('Dashboard Wallet', () => {
           expect(texts, 'headings').to.deep.equal(theadArray);
         });
       cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
+    });
+  });
+  describe('Liquidity Pool Transactions', () => {
+    it('should show your transactions', () => {
+      cy.get('[data-cy="dashboard-transaction-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-transaction-header-container"]')
+        .should('exist')
+        .and('be.visible');
+      cy.get('[data-cy="dashboard-transaction-header-container"]')
+        .find('h3')
+        .contains('Liquidity Pool Transactions');
+      cy.get('[data-cy="dashboard-transaction-header-container"]')
+        .find('p')
+        .contains('There are no recent liquidity pool transactions to show');
     });
   });
 });
