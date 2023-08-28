@@ -78,8 +78,32 @@ describe('Dashboard Wallet', () => {
         .invoke('text')
         .then((text) => {
           const firstLetter = text.trim()[0];
-          expect(firstLetter).to.equal('S');
+          expect(firstLetter).to.equal('G');
         });
+    });
+  });
+  describe('', () => {
+    it('should show your payments history', () => {
+      const theadArray = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'MEMO', 'OPERATION ID'];
+
+      cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
+
+      cy.get('[data-cy="dashboard-payment-header-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-payment-header-container"]')
+        .find('h3')
+        .contains('Payments History');
+      cy.get('[data-cy="dashboard-payment-header-container"]')
+        .find('p')
+        .contains('Hiding payments smaller than 0.5 XLM');
+
+      cy.get('[data-cy="dashboard-payment-table-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="dashboard-payment-thead"]')
+        .find('th')
+        .then((th) => {
+          const texts = Cypress._.map(th, 'innerText');
+          expect(texts, 'headings').to.deep.equal(theadArray);
+        });
+      cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
     });
   });
 });
