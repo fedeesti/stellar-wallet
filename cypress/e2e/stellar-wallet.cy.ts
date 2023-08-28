@@ -65,6 +65,21 @@ describe('Dashboard Wallet', () => {
       cy.get('[data-cy="dashboard-balance-btn-container"]').should('exist').and('be.visible');
       cy.get('[data-cy="dashboard-balance-btn-send"]').should('be.visible').contains('Send');
       cy.get('[data-cy="dashboard-balance-btn-receive"]').should('be.visible').contains('Receive');
+
+      cy.get('[data-cy="dashboard-balance-public-key-container"]')
+        .should('exist')
+        .and('be.visible');
+      cy.get('[data-cy="dashboard-balance-public-key-container"]')
+        .find('h3')
+        .should('be.visible')
+        .contains('Your Stellar Public Key');
+      cy.get('[data-cy="dashboard-balance-public-key-container"]')
+        .find('code')
+        .invoke('text')
+        .then((text) => {
+          const firstLetter = text.trim()[0];
+          expect(firstLetter).to.equal('S');
+        });
     });
   });
 });
