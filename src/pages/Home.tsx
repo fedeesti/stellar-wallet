@@ -2,11 +2,11 @@ import { useState } from 'react';
 import Modal from '../components/modal/Modal';
 
 function Home() {
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [contentModal, setContentModal] = useState<string>('');
 
   const closeModal = () => {
-    setShowModal(false);
+    setIsModalOpen(false);
   };
 
   const handleGenerateKeypair = () => {
@@ -14,7 +14,7 @@ function Home() {
   };
 
   const handleGenerateConfirm = () => {
-    setShowModal(true);
+    setIsModalOpen(true);
     setContentModal('confirm');
   };
 
@@ -42,7 +42,7 @@ function Home() {
           </div>
         </div>
       </div>
-      {showModal && (
+      {isModalOpen && (
         <Modal
           content={contentModal}
           changeContent={handleGenerateKeypair}
