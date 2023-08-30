@@ -6,7 +6,7 @@ interface initialErrorState {
 }
 
 function GenerateKeypair() {
-  const [storedKeypair, setStoredKeypair] = useState<boolean>(false);
+  const [isKeypairStored, setIsKeypairStored] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [error, setError] = useState<initialErrorState>({ status: false, message: '' });
 
@@ -17,29 +17,30 @@ function GenerateKeypair() {
   `;
 
   const toggleStoredKeypair = () => {
-    if (!storedKeypair) {
+    if (!isKeypairStored) {
       setError({ status: false, message: '' });
     }
 
-    setStoredKeypair(!storedKeypair);
+    setIsKeypairStored(!isKeypairStored);
   };
 
   const copyToClipboard = (textToCopy: string) => {
+    const displayTimeOfTooltip = 2000;
     navigator.clipboard.writeText(textToCopy).then(
       () => {
         setIsCopied(true);
         setTimeout(() => {
           setIsCopied(false);
-        }, 2000);
+        }, displayTimeOfTooltip);
       },
       (err) => {
-        console.log('failed to copy', err.mesage);
+        throw new Error(`failed to copy, ${err.message}`);
       },
     );
   };
 
   const connectAWallet = () => {
-    if (!storedKeypair) {
+    if (!isKeypairStored) {
       setError({
         status: true,
         message: 'Please confirm that you have copied and stored your secret key',
