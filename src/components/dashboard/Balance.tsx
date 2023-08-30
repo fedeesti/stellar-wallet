@@ -1,4 +1,8 @@
-function Balance() {
+interface IProps {
+  publicKey: string;
+}
+
+function Balance({ publicKey }: IProps) {
   return (
     <section className="my-8 p-8 bg-[#303448]" data-cy="dashboard-balance-section-container">
       <div className="px-12 my-o mx-auto max-w-7xl w-full">
@@ -53,7 +57,7 @@ function Balance() {
         >
           <h3 className="mb-2">Your Stellar Public Key</h3>
           <code className="mb-6 font-medium line-break border border-solid border-[#3a3e4d] py-0.5 px-1  ">
-            GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF
+            {publicKey}
           </code>
         </div>
       </div>
