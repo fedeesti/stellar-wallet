@@ -1,20 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { storedKeypairErrorMessage } from '../../utils/constants';
+import { createAccount } from '../../service/createAccount ';
+import { Keypair } from '../../types/types';
 
 interface initialErrorState {
   status: boolean;
   message: string;
 }
 
+const INITIAL_STATE: Keypair = {
+  publicKey: '',
+  secretKey: '',
+};
+
 function GenerateKeypair() {
+  const [account, setAccount] = useState<Keypair>(INITIAL_STATE);
   const [isKeypairStored, setIsKeypairStored] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [error, setError] = useState<initialErrorState>({ status: false, message: '' });
 
+  useEffect(() => {
+    const keypair = createAccount();
+    setAccount(keypair);
+  }, []);
+
   const textToCopy = `Public key:
-  GDRU64ATGPDM2EVNOIVVM3P3X55LT5FLUA6XMD55IYACPDDVUWZ5BQTW
+  ${account.publicKey}
   Secret key:
-  SBZK3IZGHIM3GP2I4K32QVSWBNVUAD2KL6VMUQOQEMXAIWNXDU7KRTAD
+  ${account.secretKey}
   `;
 
   const toggleStoredKeypair = () => {
@@ -109,13 +122,13 @@ function GenerateKeypair() {
         <div className="mb-6" data-cy="generate-keypair-public-container">
           <h4 className="text-sm font-medium mb-2">PUBLIC KEY</h4>
           <code className="break-words bg-[#303448] text-sm border border-solid border-[#3a3e4d] rounded-sm px-1 py-0.5">
-            GDRU64ATGPDM2EVNOIVVM3P3X55LT5FLUA6XMD55IYACPDDVUWZ5BQTW
+            {account.publicKey}
           </code>
         </div>
         <div className="mb-6" data-cy="generate-keypair-secret-container">
           <h4 className="text-sm font-medium mb-2">SECRET KEY</h4>
           <code className="break-words bg-[#303448] text-sm border border-solid border-[#3a3e4d] rounded-sm px-1 py-0.5">
-            SBZK3IZGHIM3GP2I4K32QVSWBNVUAD2KL6VMUQOQEMXAIWNXDU7KRTAD
+            {account.secretKey}
           </code>
         </div>
       </div>
