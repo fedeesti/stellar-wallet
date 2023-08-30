@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { storedKeypairErrorMessage } from '../../utils/constants';
 
 interface initialErrorState {
   status: boolean;
@@ -43,10 +44,10 @@ function GenerateKeypair() {
     if (!isKeypairStored) {
       setError({
         status: true,
-        message: 'Please confirm that you have copied and stored your secret key',
+        message: storedKeypairErrorMessage.notCopied,
       });
     } else {
-      setError({ status: false, message: '' });
+      setError({ status: false, message: storedKeypairErrorMessage.copied });
     }
   };
 
