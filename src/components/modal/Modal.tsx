@@ -1,5 +1,5 @@
-import SecretKeyLogin from '../generateKeys/SecretKeyLogin';
-import WarningLogin from '../generateKeys/WarningLogin';
+import SecretKeyLogin from '../login/SecretKeyLogin';
+import WarningLogin from '../login/WarningLogin';
 
 interface IProps {
   content: string;
