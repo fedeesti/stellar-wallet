@@ -12,6 +12,10 @@ describe('UI Layout', () => {
       cy.get('[data-cy="nav-logo-link"]')
         .should('be.visible')
         .and('have.attr', 'href', Cypress.env('URL_STELLAR'));
+      cy.get('[data-cy="nav-btn-account-viewer"]')
+        .should('exist')
+        .and('be.visible')
+        .and('have.text', 'Account Viewer');
     });
   });
   describe('Footer', () => {
