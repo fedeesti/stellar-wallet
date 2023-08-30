@@ -1,4 +1,4 @@
-function PaymentsHistory() {
+function TransactionHistory() {
   return (
     <section className="bg-[#292d3e] px-8 mb-12" data-cy="dashboard-payment-container">
       <div className="mb-8" data-cy="dashboard-payment-header-container">
@@ -44,4 +44,4 @@ function PaymentsHistory() {
   );
 }
 
-export default PaymentsHistory;
+export default TransactionHistory;
