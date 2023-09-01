@@ -1,8 +1,7 @@
-import ConfirmGenerate from '../generateKeys/ConfirmGenerate';
-import GenerateKeypair from '../generateKeys/GenerateKeypair';
+import ConfirmGenerate from '../login/ConfirmGenerate';
+import GenerateKeypair from '../login/GenerateKeypair';
 import SecretKeyLogin from '../login/SecretKeyLogin';
 import WarningLogin from '../login/WarningLogin';
-
 
 interface IProps {
   content: string;
@@ -13,7 +12,6 @@ interface IProps {
 function Modal({ content, changeContent, closeModal }: IProps) {
   return (
     <div
-
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
       onClick={closeModal}
     >
@@ -54,8 +52,9 @@ function Modal({ content, changeContent, closeModal }: IProps) {
           {content === 'warning' ? (
             <WarningLogin onClose={closeModal} changeContent={changeContent} />
           ) : (
-            <SecretKeyLogin /> )}
-{content === 'confirm' ? (
+            <SecretKeyLogin />
+          )}
+          {content === 'confirm' ? (
             <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
           ) : (
             <GenerateKeypair />
