@@ -16,15 +16,15 @@ function Home() {
   const handleGenerateConfirm = () => {
     setIsModalOpen(true);
     setContentModal('confirm');
+  };
 
   const handleSecretKeyLogin = () => {
     setContentModal('secret');
   };
 
   const handleWarningLogin = () => {
-    setShowModal(true);
+    setIsModalOpen(true);
     setContentModal('warning');
-
   };
 
   return (
@@ -36,7 +36,7 @@ function Home() {
               Connect with a wallet
             </h2>
             <div className="mt-16 grid space-y-4" data-cy="home-button-list-container">
-             <button
+              <button
                 className="group h-12 px-6"
                 data-cy="home-connect-secret-key"
                 onClick={handleWarningLogin}
