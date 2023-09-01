@@ -1,11 +1,12 @@
 import Footer from './components/footer/Footer';
+import LoginWithAlbedo from './components/login/LoginWithAlbedo';
 import NavBar from './components/navbar/NavBar';
 
 function App() {
   return (
     <>
       <NavBar />
-      <h1>Hello, World!</h1>
+      <LoginWithAlbedo />
       <Footer />
     </>
   );
