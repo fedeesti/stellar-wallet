@@ -1,5 +1,8 @@
 import ConfirmGenerate from '../generateKeys/ConfirmGenerate';
 import GenerateKeypair from '../generateKeys/GenerateKeypair';
+import SecretKeyLogin from '../login/SecretKeyLogin';
+import WarningLogin from '../login/WarningLogin';
+
 
 interface IProps {
   content: string;
@@ -10,13 +13,14 @@ interface IProps {
 function Modal({ content, changeContent, closeModal }: IProps) {
   return (
     <div
+
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
       onClick={closeModal}
     >
       <div
-        className="absolute w-4/5 max-w-[600px] bg-stellar-black z-[calc(30+1)] overflow-hidden -translate-x-2/4 translate-y-[-35%] mt-0 pt-14 pb-8 px-6 rounded-lg left-2/4 top-[35%]"
         data-cy="modal-container"
         onClick={(e) => e.stopPropagation()}
+        className="absolute w-4/5 max-w-[600px] bg-stellar-black z-[calc(30+1)] overflow-hidden -translate-x-2/4 translate-y-[-35%] mt-0 pt-14 pb-8 px-6 rounded-lg left-2/4 top-[35%]"
       >
         <div className="absolute cursor-pointer right-3 top-4">
           <button
@@ -43,8 +47,15 @@ function Modal({ content, changeContent, closeModal }: IProps) {
             <span className="sr-only">Close modal</span>
           </button>
         </div>
-        <div className="overflow-y-auto max-h-[70vh]" data-cy="modal-title">
-          {content === 'confirm' ? (
+        <div className="overflow-y-auto max-h-[70vh] space-y-6">
+          <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
+            Connect with a secret key
+          </h3>
+          {content === 'warning' ? (
+            <WarningLogin onClose={closeModal} changeContent={changeContent} />
+          ) : (
+            <SecretKeyLogin /> )}
+{content === 'confirm' ? (
             <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
           ) : (
             <GenerateKeypair />

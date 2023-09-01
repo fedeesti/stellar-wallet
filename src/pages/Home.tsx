@@ -16,6 +16,15 @@ function Home() {
   const handleGenerateConfirm = () => {
     setIsModalOpen(true);
     setContentModal('confirm');
+
+  const handleSecretKeyLogin = () => {
+    setContentModal('secret');
+  };
+
+  const handleWarningLogin = () => {
+    setShowModal(true);
+    setContentModal('warning');
+
   };
 
   return (
@@ -27,11 +36,18 @@ function Home() {
               Connect with a wallet
             </h2>
             <div className="mt-16 grid space-y-4" data-cy="home-button-list-container">
-              <button
+             <button
                 className="group h-12 px-6"
-                data-cy="home-generate-keypair"
-                onClick={handleGenerateConfirm}
+                data-cy="home-connect-secret-key"
+                onClick={handleWarningLogin}
               >
+                <div className="relative flex items-center space-x-4 justify-center">
+                  <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline">
+                    Connect with a secret key
+                  </span>
+                </div>
+              </button>
+              <button className="group h-12 px-6" data-cy="home-generate-keypair">
                 <div className="relative flex items-center space-x-4 justify-center">
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline hover:no-underline">
                     Generate key pair for a new account
