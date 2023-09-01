@@ -38,7 +38,7 @@ function Modal({ closeModal }: IProps) {
             <span className="sr-only">Close modal</span>
           </button>
         </div>
-        <div className="overflow-y-auto max-h-[70vh]" data-cy="modal-title">
+        <div className="overflow-y-auto max-h-[70vh]">
           <div className="space-y-6">
             <div className="flex flex-col items-center">
               <svg
@@ -47,6 +47,7 @@ function Modal({ closeModal }: IProps) {
                 height="1024"
                 viewBox="0 0 896 1024"
                 className="w-12 h-12"
+                data-cy="albedo-logo-svg"
               >
                 <path
                   fill="#0691b7"
@@ -54,16 +55,17 @@ function Modal({ closeModal }: IProps) {
                 ></path>
               </svg>
             </div>
-            <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
+            <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="albedo-title">
               Connect with Albedo
             </h3>
             <div>
-              <p className="text-center">
+              <p className="text-center" data-cy="modal-albedo-information">
                 Albedo is a browser wallet.
                 <a
                   className="text-[#6260eb] hover:text-[#937eef] font-medium"
                   href="https://albedo.link/"
                   target="_blank"
+                  data-cy="modal-albedo-information-link"
                 >
                   {' '}
                   Learn more
@@ -72,9 +74,9 @@ function Modal({ closeModal }: IProps) {
             </div>
             <div
               className="flex flex-row gap-1 mb-6 p-4 rounded border-2 border-stellar-red-700 bg-stellar-red-800"
-              data-cy="confirm-generate-description-container"
+              data-cy="modal-albedo-body-container"
             >
-              <div className="pt-[0.4rem]" data-cy="confirm-generate-warning-svg">
+              <div className="pt-[0.4rem]" data-cy="modal-albedo-info-svg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -91,8 +93,8 @@ function Modal({ closeModal }: IProps) {
                   <path d="M12 16v-4M12 8h.01"></path>
                 </svg>
               </div>
-              <div data-cy="confirm-generate-description">
-                <p className="text-base leading-relaxed ">
+              <div data-cy="modal-albedo-description">
+                <p className="text-base leading-relaxed">
                   Click on "Connect with Albedo" to launch Albedo browser wallet.
                 </p>
               </div>
@@ -100,14 +102,14 @@ function Modal({ closeModal }: IProps) {
             <div className="flex items-center p-6 space-x-2 justify-end">
               <button
                 type="button"
-                data-cy="confirm-generate-btn-continue"
+                data-cy="albedo-btn-connect"
                 className="text-stellar-gray-200 bg-stellar-violet-700 font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-violet-500 cursor-pointer"
               >
                 Connect with Albedo
               </button>
               <button
                 type="button"
-                data-cy="confirm-generate-btn-cancel"
+                data-cy="albedo-btn-cancel"
                 onClick={closeModal}
                 className="text-stellar-violet-700 hover:bg-stellar-violet-700 hover:text-stellar-gray-200 rounded border border-stellar-violet-700 text-sm font-medium px-5 py-2.5"
               >
