@@ -1,7 +1,23 @@
+import { useState } from 'react';
+import Modal from '../modal/Modal';
+
 function LoginWithAlbedo() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="mb-6 min-w-[250px] flex justify-between items-center px-12">
-      <button className="border border-[#3a3e4d] hover:border-[#4b4f5d] rounded-md bg-[#292d3e] p-3 mr-3 flex flex-row justify-center items-center cursor-pointer">
+      <button
+        onClick={openModal}
+        className="border border-[#3a3e4d] hover:border-[#4b4f5d] rounded-md bg-[#292d3e] p-3 mr-3 flex flex-row justify-center items-center cursor-pointer"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="896"
@@ -16,6 +32,7 @@ function LoginWithAlbedo() {
         </svg>
         <span className="text-base text-[#ffffff] pt-0.5 pr-2">Connect with Albedo</span>
       </button>
+      {isModalOpen && <Modal closeModal={closeModal} />}
     </div>
   );
 }
