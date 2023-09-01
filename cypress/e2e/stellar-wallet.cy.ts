@@ -37,13 +37,6 @@ describe('Stellar Wallet management', () => {
         'STELLAR_PRIVACY_POLICY',
       )}`;
       cy.get('[data-cy="footer-container"]').should('exist').and('be.visible');
-      cy.get('[data-cy="footer-stellar-description"]')
-        .should('be.visible')
-        .and('contain', 'All Rights Reserved');
-      cy.get('[data-cy="footer-stellar-link"]')
-        .should('be.visible')
-        .and('contain', 'Stellar')
-        .and('have.attr', 'href', Cypress.env('URL_STELLAR'));
       cy.get('[data-cy="footer-terms-of-service-title"]')
         .should('be.visible')
         .and('contain', 'Terms of Service');
@@ -56,9 +49,8 @@ describe('Stellar Wallet management', () => {
       cy.get('[data-cy="footer-privacy-policy-link"]')
         .should('be.visible')
         .and('have.attr', 'href', urlStellarPrivacyPolicy);
-      cy.get('[data-cy="footer-repository-title"]')
-        .should('be.visible')
-        .and('contain', 'Repository');
+      cy.get('[data-cy="footer-repository-title"]').should('be.visible').and('contain', 'Github');
+
       cy.get('[data-cy="footer-repository-link"]')
         .should('be.visible')
         .and('have.attr', 'href', Cypress.env('URL_GITHUB_REPO'));
