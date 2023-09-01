@@ -16,6 +16,10 @@ describe('Stellar Wallet management', () => {
       cy.get('[data-cy="nav-logo-link"]')
         .should('be.visible')
         .and('have.attr', 'href', Cypress.env('URL_STELLAR'));
+      cy.get('[data-cy="nav-btn-account-viewer"]')
+        .should('exist')
+        .and('be.visible')
+        .and('have.text', 'Account Viewer');
     });
     it('Should show a home page with different options to connect to the wallet', () => {
       cy.get('[data-cy="home-container"]').should('exist').and('be.visible');

@@ -2,6 +2,7 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    extend: {
     colors: {
       'stellar-violet-100': '#d4d5d8',
       'stellar-violet-200': '#a9abb2',
@@ -21,6 +22,10 @@ export default {
       'stellar-red-800': '#482f42',
       'stellar-gray-100': '#e3e3e3',
       'stellar-gray-200': '#dadde1',
+    },
+   padding: {
+        0.2: '0.2rem',
+      },
     },
   },
   plugins: [],
