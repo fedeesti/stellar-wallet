@@ -1,8 +1,12 @@
+import useLoginWithAlbedo from '../../hooks/useLoginWithAlbedo';
+
 interface IProps {
   closeModal: () => void;
 }
 
 function Modal({ closeModal }: IProps) {
+  const { albedoGetPublicKey } = useLoginWithAlbedo();
+
   return (
     <div
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
@@ -103,6 +107,7 @@ function Modal({ closeModal }: IProps) {
               <button
                 type="button"
                 data-cy="albedo-btn-connect"
+                onClick={albedoGetPublicKey}
                 className="text-stellar-gray-200 bg-stellar-violet-700 font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-violet-500 cursor-pointer"
               >
                 Connect with Albedo
