@@ -1,15 +1,17 @@
+import { IContentModal } from '../../types/types';
 import ConfirmGenerate from '../login/ConfirmGenerate';
 import GenerateKeypair from '../login/GenerateKeypair';
 import SecretKeyLogin from '../login/SecretKeyLogin';
 import WarningLogin from '../login/WarningLogin';
 
 interface IProps {
-  content: string;
+  content: IContentModal;
   changeContent: () => void;
   closeModal: () => void;
 }
 
 function Modal({ content, changeContent, closeModal }: IProps) {
+  const { viewWarning, viewSecretKey, viewConfirmGenerate, viewGenerateKeypair } = content;
   return (
     <div
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
@@ -46,16 +48,12 @@ function Modal({ content, changeContent, closeModal }: IProps) {
           </button>
         </div>
         <div className="overflow-y-auto max-h-[70vh] space-y-6">
-          {content === 'warning' ? (
-            <WarningLogin onClose={closeModal} changeContent={changeContent} />
-          ) : (
-            <SecretKeyLogin />
-          )}
-          {content === 'confirm' ? (
+          {viewWarning && <WarningLogin onClose={closeModal} changeContent={changeContent} />}
+          {viewSecretKey && <SecretKeyLogin />}
+          {viewConfirmGenerate && (
             <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
-          ) : (
-            <GenerateKeypair />
           )}
+          {viewGenerateKeypair && <GenerateKeypair />}
         </div>
       </div>
     </div>
