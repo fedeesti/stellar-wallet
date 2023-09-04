@@ -1,32 +1,16 @@
-import { useState } from 'react';
 import Modal from '../components/modal/Modal';
+import useModal from '../hooks/useModal';
 import LoginWithAlbedo from '../components/login/LoginWithAlbedo';
 
 function Home() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [contentModal, setContentModal] = useState<string>('');
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleGenerateKeypair = () => {
-    setContentModal('');
-  };
-
-  const handleGenerateConfirm = () => {
-    setIsModalOpen(true);
-    setContentModal('confirm');
-  };
-
-  const handleSecretKeyLogin = () => {
-    setContentModal('secret');
-  };
-
-  const handleWarningLogin = () => {
-    setIsModalOpen(true);
-    setContentModal('warning');
-  };
+  const {
+    isModalOpen,
+    closeModal,
+    contentModal,
+    handleWarningLogin,
+    handleGenerateConfirm,
+    handleChangeContent,
+  } = useModal();
 
   return (
     <div className="relative py-16">
@@ -49,7 +33,11 @@ function Home() {
                   </span>
                 </div>
               </button>
-              <button className="group h-12 px-6" data-cy="home-generate-keypair">
+              <button
+                className="group h-12 px-6"
+                data-cy="home-generate-keypair"
+                onClick={handleGenerateConfirm}
+              >
                 <div className="relative flex items-center space-x-4 justify-center">
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline hover:no-underline">
                     Generate key pair for a new account
@@ -61,11 +49,7 @@ function Home() {
         </div>
       </div>
       {isModalOpen && (
-        <Modal
-          content={contentModal}
-          changeContent={handleGenerateKeypair}
-          closeModal={closeModal}
-        />
+        <Modal content={contentModal} changeContent={handleChangeContent} closeModal={closeModal} />
       )}
     </div>
   );
