@@ -1,17 +1,8 @@
-import { useState } from 'react';
-import Modal from '../modal/Modal';
+interface IProps {
+  openModal: () => void;
+}
 
-function LoginWithAlbedo() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
+function LoginWithAlbedo({ openModal }: IProps) {
   return (
     <div className="mb-6 min-w-[250px] flex justify-between items-center px-8">
       <button
@@ -35,7 +26,6 @@ function LoginWithAlbedo() {
           Connect with Albedo
         </span>
       </button>
-      {isModalOpen && <Modal closeModal={closeModal} />}
     </div>
   );
 }
