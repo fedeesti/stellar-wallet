@@ -1,31 +1,44 @@
 import { useState } from 'react';
 import Modal from '../components/modal/Modal';
+import { IContentModal } from '../types/types';
+
+const INITIAL_CONTENT_MODAL: IContentModal = {
+  viewWarning: false,
+  viewSecretKey: false,
+  viewConfirmGenerate: false,
+  viewGenerateKeypair: false,
+};
 
 function Home() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [contentModal, setContentModal] = useState<string>('');
+  const [contentModal, setContentModal] = useState<IContentModal>(INITIAL_CONTENT_MODAL);
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setContentModal(INITIAL_CONTENT_MODAL);
   };
 
   const handleGenerateKeypair = () => {
-    setContentModal('');
+    setContentModal({ ...INITIAL_CONTENT_MODAL, viewGenerateKeypair: true });
   };
 
   const handleGenerateConfirm = () => {
     setIsModalOpen(true);
-    setContentModal('confirm');
+    setContentModal({ ...contentModal, viewConfirmGenerate: true });
   };
 
   const handleSecretKeyLogin = () => {
-    setContentModal('secret');
+    setContentModal({ ...INITIAL_CONTENT_MODAL, viewSecretKey: true });
   };
 
   const handleWarningLogin = () => {
     setIsModalOpen(true);
-    setContentModal('warning');
+    setContentModal({ ...contentModal, viewWarning: true });
   };
+
+  const handleChangeContent = contentModal.viewWarning
+    ? handleSecretKeyLogin
+    : handleGenerateKeypair;
 
   return (
     <div className="relative py-16">
@@ -47,7 +60,11 @@ function Home() {
                   </span>
                 </div>
               </button>
-              <button className="group h-12 px-6" data-cy="home-generate-keypair">
+              <button
+                className="group h-12 px-6"
+                data-cy="home-generate-keypair"
+                onClick={handleGenerateConfirm}
+              >
                 <div className="relative flex items-center space-x-4 justify-center">
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline hover:no-underline">
                     Generate key pair for a new account
@@ -59,11 +76,7 @@ function Home() {
         </div>
       </div>
       {isModalOpen && (
-        <Modal
-          content={contentModal}
-          changeContent={handleGenerateKeypair}
-          closeModal={closeModal}
-        />
+        <Modal content={contentModal} changeContent={handleChangeContent} closeModal={closeModal} />
       )}
     </div>
   );
