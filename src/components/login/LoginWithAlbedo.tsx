@@ -13,7 +13,7 @@ function LoginWithAlbedo() {
   };
 
   return (
-    <div className="mb-6 min-w-[250px] flex justify-between items-center px-12">
+    <div className="mb-6 min-w-[250px] flex justify-between items-center px-8">
       <button
         onClick={openModal}
         data-cy="login-albedo-btn"
