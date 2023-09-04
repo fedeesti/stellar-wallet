@@ -12,7 +12,8 @@ interface IProps {
 }
 
 function Modal({ content, changeContent, closeModal }: IProps) {
-  const { viewWarning, viewSecretKey, viewConfirmGenerate, viewGenerateKeypair } = content;
+  const { viewWarning, viewSecretKey, viewConfirmGenerate, viewGenerateKeypair, viewAlbedoLogin } =
+    content;
   return (
     <div
       className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-gray-100 bg-stellar-black/90"
@@ -55,7 +56,7 @@ function Modal({ content, changeContent, closeModal }: IProps) {
             <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
           )}
           {viewGenerateKeypair && <GenerateKeypair />}
-          <AlbedoLogin closeModal={closeModal} />
+          {viewAlbedoLogin && <AlbedoLogin closeModal={closeModal} />}
         </div>
       </div>
     </div>
