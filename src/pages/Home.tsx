@@ -10,6 +10,7 @@ function Home() {
     handleWarningLogin,
     handleGenerateConfirm,
     handleChangeContent,
+    handleAlbedoLogin,
   } = useModal();
 
   return (
@@ -20,7 +21,7 @@ function Home() {
             <h2 className="mb-8 text-2xl font-bold text-center" data-cy="home-title">
               Connect with a wallet
             </h2>
-            <LoginWithAlbedo />
+            <LoginWithAlbedo openModal={handleAlbedoLogin} />
             <div className="mt-16 grid space-y-4" data-cy="home-button-list-container">
               <button
                 className="group h-12 px-6"

@@ -1,4 +1,3 @@
-
 import { IContentModal } from '../../types/types';
 import ConfirmGenerate from '../login/ConfirmGenerate';
 import GenerateKeypair from '../login/GenerateKeypair';
@@ -13,10 +12,11 @@ interface IProps {
 }
 
 function Modal({ content, changeContent, closeModal }: IProps) {
-  const { viewWarning, viewSecretKey, viewConfirmGenerate, viewGenerateKeypair } = content;
+  const { viewWarning, viewSecretKey, viewConfirmGenerate, viewGenerateKeypair, viewAlbedoLogin } =
+    content;
   return (
     <div
-      className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-ghostwhite bg-stellar-black/90"
+      className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-gray-100 bg-stellar-black/90"
       onClick={closeModal}
     >
       <div
@@ -27,7 +27,7 @@ function Modal({ content, changeContent, closeModal }: IProps) {
         <div className="absolute cursor-pointer right-3 top-4">
           <button
             type="button"
-            className="bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto"
+            className="bg-transparent text-stellar-gray-100 hover:text-stellar-violet-200 rounded-lg text-sm w-8 h-8 ml-auto"
             data-cy="modal-btn-close"
             onClick={closeModal}
           >
@@ -56,7 +56,7 @@ function Modal({ content, changeContent, closeModal }: IProps) {
             <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
           )}
           {viewGenerateKeypair && <GenerateKeypair />}
-          <AlbedoLogin closeModal={closeModal} />
+          {viewAlbedoLogin && <AlbedoLogin closeModal={closeModal} />}
         </div>
       </div>
     </div>

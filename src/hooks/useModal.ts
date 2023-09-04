@@ -6,6 +6,7 @@ const INITIAL_CONTENT_MODAL: IContentModal = {
   viewSecretKey: false,
   viewConfirmGenerate: false,
   viewGenerateKeypair: false,
+  viewAlbedoLogin: false,
 };
 
 function useModal() {
@@ -35,6 +36,11 @@ function useModal() {
     setContentModal({ ...contentModal, viewWarning: true });
   };
 
+  const handleAlbedoLogin = () => {
+    setIsModalOpen(true);
+    setContentModal({ ...contentModal, viewAlbedoLogin: true });
+  };
+
   const handleChangeContent = contentModal.viewWarning
     ? handleSecretKeyLogin
     : handleGenerateKeypair;
@@ -46,6 +52,7 @@ function useModal() {
     handleGenerateConfirm,
     handleWarningLogin,
     handleChangeContent,
+    handleAlbedoLogin,
   };
 }
 
