@@ -8,4 +8,5 @@ interface IContentModal {
   viewSecretKey: boolean;
   viewConfirmGenerate: boolean;
   viewGenerateKeypair: boolean;
+  viewAlbedoLogin: boolean;
 }
