@@ -23,7 +23,7 @@ function AlbedoLogin({ closeModal }: IProps) {
           ></path>
         </svg>
       </div>
-      <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="albedo-title">
+      <h3 className="text-2xl text-center font-medium" data-cy="albedo-title">
         Connect with Albedo
       </h3>
       <div>
@@ -41,7 +41,7 @@ function AlbedoLogin({ closeModal }: IProps) {
         </p>
       </div>
       <div
-        className="flex flex-row gap-1 mb-6 p-4 rounded border-2 border-stellar-red-700 bg-stellar-red-800"
+        className="flex flex-row gap-1 mb-6 p-4 rounded border-2 border-stellar-violet-800 bg-stellar-violet-900"
         data-cy="modal-albedo-body-container"
       >
         <div className="pt-[0.4rem]" data-cy="modal-albedo-info-svg">
@@ -51,7 +51,7 @@ function AlbedoLogin({ closeModal }: IProps) {
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
+            stroke="#6260eb"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
