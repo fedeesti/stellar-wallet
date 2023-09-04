@@ -1,8 +1,10 @@
+
 import { IContentModal } from '../../types/types';
 import ConfirmGenerate from '../login/ConfirmGenerate';
 import GenerateKeypair from '../login/GenerateKeypair';
 import SecretKeyLogin from '../login/SecretKeyLogin';
 import WarningLogin from '../login/WarningLogin';
+import AlbedoLogin from '../login/AlbedoLogin';
 
 interface IProps {
   content: IContentModal;
@@ -54,6 +56,7 @@ function Modal({ content, changeContent, closeModal }: IProps) {
             <ConfirmGenerate onClose={closeModal} changeContent={changeContent} />
           )}
           {viewGenerateKeypair && <GenerateKeypair />}
+          <AlbedoLogin closeModal={closeModal} />
         </div>
       </div>
     </div>
