@@ -9,7 +9,7 @@ describe('Stellar Wallet management', () => {
     cy.get('[data-cy="home-generate-keypair"]').as('connectBtnGenerateKeyPair');
     cy.get('[data-cy="home-connect-secret-key"]').as('connectWithPrivateKey');
   });
-  describe.only('UI Layout', () => {
+  describe('UI Layout', () => {
     it('Should show a navbar', () => {
       cy.get('[data-cy="nav-container"]').should('exist').and('be.visible');
       cy.get('[data-cy="nav-logo"]').should('be.visible');
@@ -62,6 +62,44 @@ describe('Stellar Wallet management', () => {
   });
 
   describe('Login', () => {
+    describe('Connect with Albedo', () => {
+      it('Should show a modal to connect with Albedo', () => {
+        cy.get('[data-cy="login-albedo-btn"]')
+          .should('exist')
+          .and('be.visible')
+          .contains('Connect with Albedo');
+        cy.get('[data-cy="modal-container"]').should('not.exist');
+
+        cy.get('[data-cy="login-albedo-btn"]').click();
+
+        cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="modal-btn-close"]').should('exist').and('be.visible');
+        cy.get('[data-cy="albedo-logo-svg"]').should('exist').and('be.visible');
+        cy.get('[data-cy="albedo-title"]').should('be.visible').contains('Connect with Albedo');
+        cy.get('[data-cy="modal-albedo-information"]')
+          .should('be.visible')
+          .contains('Albedo is a browser wallet.');
+        cy.get('[data-cy="modal-albedo-information-link"]')
+          .should('be.visible')
+          .contains('Learn more')
+          .and('have.attr', 'href', Cypress.env('URL_ALBEDO_LINK'));
+        cy.get('[data-cy="modal-albedo-body-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="modal-albedo-info-svg"]').should('exist').and('be.visible');
+        cy.get('[data-cy="modal-albedo-description"]')
+          .find('p')
+          .should('exist')
+          .and('be.visible')
+          .contains('Click on "Connect with Albedo" to launch Albedo browser wallet.');
+        cy.get('[data-cy="albedo-btn-connect"]')
+          .should('exist')
+          .and('be.visible')
+          .contains('Connect with Albedo');
+        cy.get('[data-cy="albedo-btn-cancel"]')
+          .should('exist')
+          .and('be.visible')
+          .contains('Cancel');
+      });
+    });
     describe('connect with a secret key', () => {
       beforeEach(() => {
         cy.get('@connectWithPrivateKey').click();
@@ -228,41 +266,5 @@ describe('Stellar Wallet management', () => {
         });
       });
     });
-  });
-});
-
-describe('Connect with Albedo', () => {
-  it('Should show a modal to connect with Albedo', () => {
-    cy.get('[data-cy="login-albedo-btn"]')
-      .should('exist')
-      .and('be.visible')
-      .contains('Connect with Albedo');
-    cy.get('[data-cy="modal-container"]').should('not.exist');
-
-    cy.get('[data-cy="login-albedo-btn"]').click();
-
-    cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
-    cy.get('[data-cy="modal-btn-close"]').should('exist').and('be.visible');
-    cy.get('[data-cy="albedo-logo-svg"]').should('exist').and('be.visible');
-    cy.get('[data-cy="albedo-title"]').should('be.visible').contains('Connect with Albedo');
-    cy.get('[data-cy="modal-albedo-information"]')
-      .should('be.visible')
-      .contains('Albedo is a browser wallet.');
-    cy.get('[data-cy="modal-albedo-information-link"]')
-      .should('be.visible')
-      .contains('Learn more')
-      .and('have.attr', 'href', Cypress.env('URL_ALBEDO_LINK'));
-    cy.get('[data-cy="modal-albedo-body-container"]').should('exist').and('be.visible');
-    cy.get('[data-cy="modal-albedo-info-svg"]').should('exist').and('be.visible');
-    cy.get('[data-cy="modal-albedo-description"]')
-      .find('p')
-      .should('exist')
-      .and('be.visible')
-      .contains('Click on "Connect with Albedo" to launch Albedo browser wallet.');
-    cy.get('[data-cy="albedo-btn-connect"]')
-      .should('exist')
-      .and('be.visible')
-      .contains('Connect with Albedo');
-    cy.get('[data-cy="albedo-btn-cancel"]').should('exist').and('be.visible').contains('Cancel');
   });
 });
