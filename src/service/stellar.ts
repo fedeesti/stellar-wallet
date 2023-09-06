@@ -12,6 +12,12 @@ export function getPublicKeyFromPrivateKey(privateKey: string): string {
   }
 }
 
+export function shortenPublicKey(publicKey: string): string {
+  const first = publicKey.substring(0, 5);
+  const last = publicKey.slice(-5);
+  return `${first}...${last}`;
+}
+
 export async function loadTransactionHistory(
   signerAccountPublicKey: string,
 ): Promise<ServerApi.OperationRecord[]> {
