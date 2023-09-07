@@ -18,6 +18,16 @@ export function shortenPublicKey(publicKey: string): string {
   return `${first}...${last}`;
 }
 
+export async function findNativeBalance(signerAccountPublicKey: string): Promise<string> {
+  const response = await server.loadAccount(signerAccountPublicKey);
+  for (let i = 0; i <= response.balances.length; i++) {
+    if (response.balances[i].asset_type === 'native') {
+      return parseFloat(response.balances[i].balance).toFixed(7);
+    }
+  }
+  throw new Error('Could not find XLM balance for this account');
+}
+
 export async function loadTransactionHistory(
   signerAccountPublicKey: string,
 ): Promise<ServerApi.OperationRecord[]> {
