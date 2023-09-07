@@ -1,6 +1,6 @@
 function NavBar() {
   return (
-    <nav className="bg-stellar-bg-primary max-w-screen-xl p-12" data-cy="nav-container">
+    <nav className="bg-stellar-bg-primary p-12" data-cy="nav-container">
       <div className="flex items-center gap-2">
         <a href="https://www.stellar.org/" className="flex items-center" data-cy="nav-logo-link">
           <svg

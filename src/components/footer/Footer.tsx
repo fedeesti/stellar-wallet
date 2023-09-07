@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer className="px-12 bg-stellar-bg-primary text-white" data-cy="footer-container">
-      <div className="w-full max-w-screen-xl pb-12 pt-6 border-t border-stellar-border-secondary md:flex md:items-center md:justify-between">
+      <div className="w-full pb-12 pt-6 border-t border-stellar-border-secondary md:flex md:items-center md:justify-between">
         <ul className="flex flex-wrap items-center mt-3 font-bold hover:text-stellar-text-secondary dark:text-gray-400 sm:mt-0">
           <li data-cy="footer-terms-of-service-title">
             <a
