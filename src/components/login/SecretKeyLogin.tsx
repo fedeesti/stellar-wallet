@@ -121,7 +121,7 @@ function PrivateKeyLogin() {
             className="py-2 px-3 border-2 bg-transparent border-solid border-stellar-border-secondary rounded hover:border-stellar-text-tertiary focus:outline-none focus:border-stellar-btn-primary"
           />
           {error.status && (
-            <p className="text-stellar-red-400 font-normal" data-cy="login-secret-key-form-errors">
+            <p className="text-stellar-error font-normal" data-cy="login-secret-key-form-errors">
               {error.message}
             </p>
           )}
