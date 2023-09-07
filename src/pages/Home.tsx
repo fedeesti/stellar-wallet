@@ -14,45 +14,41 @@ function Home() {
   } = useModal();
 
   return (
-    <div className="relative py-16">
-      <div className="relative container m-auto px-6 md:px-12 xl:px-40" data-cy="home-container">
-        <div className="m-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
-          <div className="p-6 sm:p-16">
-            <h2 className="mb-8 text-2xl font-bold text-center" data-cy="home-title">
-              Connect with a wallet
-            </h2>
+    <main className="flex flex-col flex-grow items-stretch shrink-0 bg-stellar-bg-primary">
+      <div className="relative container w-full my-0 mx-auto px-12" data-cy="home-container">
+        <div className="pt-16 flex flex-col items-center">
+          <h2 className="mb-2 text-white text-5xl font-normal text-center" data-cy="home-title">
+            Connect with a wallet
+          </h2>
+          <div className="pb-12 pt-16">
             <LoginWithAlbedo openModal={handleAlbedoLogin} />
-            <div className="mt-16 grid space-y-4" data-cy="home-button-list-container">
-              <button
-                className="group h-12 px-6"
-                data-cy="home-connect-secret-key"
-                onClick={handleWarningLogin}
-              >
-                <div className="relative flex items-center space-x-4 justify-center">
-                  <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline">
-                    Connect with a secret key
-                  </span>
-                </div>
-              </button>
-              <button
-                className="group h-12 px-6"
-                data-cy="home-generate-keypair"
-                onClick={handleGenerateConfirm}
-              >
-                <div className="relative flex items-center space-x-4 justify-center">
-                  <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm sm:text-base underline hover:no-underline">
-                    Generate key pair for a new account
-                  </span>
-                </div>
-              </button>
-            </div>
+          </div>
+          <div className="flex flex-col items-center py-6" data-cy="home-button-list-container">
+            <button className="mb-8" data-cy="home-connect-secret-key" onClick={handleWarningLogin}>
+              <div className="relative flex items-center space-x-4 justify-center">
+                <span className="block w-max font-medium tracking-wide text-white text-sm sm:text-base underline hover:no-underline">
+                  Connect with a secret key
+                </span>
+              </div>
+            </button>
+            <button
+              className="mb-8"
+              data-cy="home-generate-keypair"
+              onClick={handleGenerateConfirm}
+            >
+              <div className="relative flex items-center space-x-4 justify-center">
+                <span className="block w-max font-medium tracking-wide text-white text-sm sm:text-base underline hover:no-underline">
+                  Generate key pair for a new account
+                </span>
+              </div>
+            </button>
           </div>
         </div>
       </div>
       {isModalOpen && (
         <Modal content={contentModal} changeContent={handleChangeContent} closeModal={closeModal} />
       )}
-    </div>
+    </main>
   );
 }
 
