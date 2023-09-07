@@ -4,7 +4,10 @@ interface IProps {
 
 function Balance({ publicKey }: IProps) {
   return (
-    <section className="my-8 p-8 bg-[#303448]" data-cy="dashboard-balance-section-container">
+    <section
+      className="my-8 p-8 bg-stellar-bg-secondary"
+      data-cy="dashboard-balance-section-container"
+    >
       <div className="px-12 my-o mx-auto max-w-7xl w-full">
         <div className="flex flex-col items-center lg:flex-row lg:justify-between">
           <div className="mb-8 lg:mb-0 text-center" data-cy="dashboard-balance-information">
@@ -13,7 +16,7 @@ function Balance({ publicKey }: IProps) {
           </div>
           <div className="flex items-center gap-6" data-cy="dashboard-balance-btn-container">
             <button
-              className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet hover:bg-[#937eef] inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-red-600/20 transition-all hover:shadow-lg hover:shadow-red-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className="px-6 py-2.5 rounded-sm bg-stellar-btn-primary hover:bg-stellar-btn-hover inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-black-600/20 transition-all hover:shadow-lg hover:shadow-black-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-cy="dashboard-balance-btn-send"
             >
               <svg
@@ -33,7 +36,7 @@ function Balance({ publicKey }: IProps) {
               Send
             </button>
             <button
-              className="px-6 py-2.5 rounded-sm bg-stellar-dark-violet hover:bg-[#937eef] inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-red-600/20 transition-all hover:shadow-lg hover:shadow-red-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className="px-6 py-2.5 rounded-sm bg-stellar-btn-primary hover:bg-stellar-btn-hover inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-black-600/20 transition-all hover:shadow-lg hover:shadow-black-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-cy="dashboard-balance-btn-receive"
             >
               <svg
@@ -56,7 +59,7 @@ function Balance({ publicKey }: IProps) {
           data-cy="dashboard-balance-public-key-container"
         >
           <h3 className="mb-2">Your Stellar Public Key</h3>
-          <code className="mb-6 font-medium line-break border border-solid border-[#3a3e4d] py-0.5 px-1  ">
+          <code className="mb-6 font-medium line-break border border-solid border-stellar-border-primary py-0.5 px-1">
             {publicKey}
           </code>
         </div>
