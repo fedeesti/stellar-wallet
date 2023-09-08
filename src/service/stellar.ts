@@ -13,12 +13,6 @@ export function getPublicKeyFromPrivateKey(privateKey: string): string {
   }
 }
 
-export function shortenPublicKey(publicKey: string): string {
-  const first = publicKey.substring(0, 5);
-  const last = publicKey.slice(-5);
-  return `${first}...${last}`;
-}
-
 export async function findNativeBalance(signerAccountPublicKey: string): Promise<string> {
   const response = await server.loadAccount(signerAccountPublicKey);
   for (let i = 0; i <= response.balances.length; i++) {
