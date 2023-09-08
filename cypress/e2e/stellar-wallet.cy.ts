@@ -107,7 +107,7 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="warning-accept-terms"]').as('warningAcceptTerms');
         cy.get('[data-cy="warning-btn-continue"]').as('warningBtnContinue');
       });
-      it.only('Should show a modal with a warning', () => {
+      it('Should show a modal with a warning', () => {
         cy.get('@modalContainer').should('exist').and('be.visible');
 
         cy.get('[data-cy="modal-btn-close"]').should('be.visible');
@@ -116,7 +116,6 @@ describe('Stellar Wallet management', () => {
           .and('contain', 'Connect with a secret key');
         cy.get('[data-cy="warning-login-container"]').should('be.visible');
         cy.get('[data-cy="warning-details-container"]').should('be.visible');
-        // cy.get('@warningAcceptTerms').should('be.visible');
         cy.get('@warningAcceptTerms')
           .find('label')
           .should('be.visible')
