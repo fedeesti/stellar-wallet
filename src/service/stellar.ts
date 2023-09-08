@@ -1,5 +1,6 @@
 import { Keypair, Server } from 'stellar-sdk';
 import { ServerApi } from 'stellar-sdk/lib/server_api';
+import { MessageError } from '../utils/constants';
 
 const server = new Server(import.meta.env.VITE_URL_HORIZON);
 
@@ -8,7 +9,7 @@ export function getPublicKeyFromPrivateKey(privateKey: string): string {
     const keyPair = Keypair.fromSecret(privateKey);
     return keyPair.publicKey();
   } catch (e) {
-    throw new Error('The private key was invalid');
+    throw new Error(MessageError.INVALID_PRIVATE_KEY);
   }
 }
 
@@ -25,7 +26,7 @@ export async function findNativeBalance(signerAccountPublicKey: string): Promise
       return parseFloat(response.balances[i].balance).toFixed(7);
     }
   }
-  throw new Error('Could not find XLM balance for this account');
+  throw new Error(MessageError.ERROR_FIND_BALANCE);
 }
 
 export async function loadTransactionHistory(
@@ -43,6 +44,6 @@ export async function loadTransactionHistory(
 
     return transaction.records;
   } catch (error) {
-    throw new Error('Could not find transaction history');
+    throw new Error(MessageError.ERROR_TRANSACTION_HISTORY);
   }
 }
