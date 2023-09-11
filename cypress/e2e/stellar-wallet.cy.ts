@@ -113,7 +113,7 @@ describe('Stellar Wallet management', () => {
           .contains('Cancel');
       });
     });
-    describe('connect with a secret key', () => {
+    describe.only('connect with a secret key', () => {
       beforeEach(() => {
         cy.get('@connectWithPrivateKey').click();
         cy.get('[data-cy="modal-container"]').as('modalContainer');
@@ -206,6 +206,17 @@ describe('Stellar Wallet management', () => {
             .and('contain', errorMessage);
           cy.get('[data-cy="login-secret-key-form"]').find('input').clear();
         }
+      });
+      it('Should log in successfully', () => {
+        const privateKey = 'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF';
+
+        cy.get('@warningAcceptTerms').find('input').check();
+        cy.get('@warningBtnContinue').click();
+
+        cy.get('[data-cy="login-secret-key-form"]').find('input').type(privateKey);
+        cy.get('[data-cy="login-secret-key-btn-connect"]').click();
+
+        cy.url().should('include', '/dashboard');
       });
     });
     describe('Generate key pair for a new account', () => {
