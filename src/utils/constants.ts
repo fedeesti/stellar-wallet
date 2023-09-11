@@ -15,6 +15,12 @@ export const errorPrivateKeyMessage = {
   invalid: 'Invalid secret key. Secret keys are uppercase and begin with the letter "S."',
 };
 
+export enum TransactionError {
+  DESTINATION_ID_EMPTY = 'Please enter a valid Stellar or Federated address',
+  INVALID_DESTINATION_ID = 'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
+  AMOUNT_EMPTY = 'Please enter amount',
+}
+
 export enum MessageError {
   INVALID_PRIVATE_KEY = 'The private key was invalid',
   ERROR_FIND_BALANCE = 'Could not find XLM balance for this account',

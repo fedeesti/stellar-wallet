@@ -1,8 +1,21 @@
+import { useState } from 'react';
+import SendPayment from '../payments/SendPayment';
+
 interface IProps {
   publicKey: string;
 }
 
 function Balance({ publicKey }: IProps) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section
       className="my-8 p-8 bg-stellar-bg-secondary"
@@ -18,6 +31,7 @@ function Balance({ publicKey }: IProps) {
             <button
               className="px-6 py-2.5 rounded-sm bg-stellar-btn-primary hover:bg-stellar-btn-hover inline-flex items-center focus:outline-none text-center text-base font-medium shadow-md shadow-black-600/20 transition-all hover:shadow-lg hover:shadow-black-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-cy="dashboard-balance-btn-send"
+              onClick={openModal}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,6 +78,7 @@ function Balance({ publicKey }: IProps) {
           </code>
         </div>
       </div>
+      {isModalOpen && <SendPayment signerAccountPublicKey={publicKey} closeModal={closeModal} />}
     </section>
   );
 }

@@ -9,5 +9,6 @@ export default defineConfig({
     STELLAR_PRIVACY_POLICY: 'privacy-policy',
     URL_GITHUB_REPO: 'https://github.com/fedeesti/stellar-wallet',
     URL_ALBEDO_LINK: 'https://albedo.link/',
+    URL_HORIZON: 'https://horizon-testnet.stellar.org',
   },
 });

@@ -1,0 +1,14 @@
+{
+  "type": "https://stellar.org/horizon-errors/transaction_failed",
+  "title": "Transaction Success",
+  "status": 200,
+  "detail": "The transaction successfully when submitted to the stellar network.",
+  "extras": {
+    "envelope_xdr": "AAAAAgAAAACuxNxHxAap1NYgA/7heiWjLnF9SFzSHQD1RPsGXEfL1gAehIAABKD6AAAAEQAAAAEAAAAAAAAAAAAAAABh3xd/AAAAAAAAAAIAAAABAAAAAK7E3EfEBqnU1iAD/uF6JaMucX1IXNIdAPVE+wZcR8vWAAAAAAAAAABDC9XNHooutDmiCvFtfAHubpz5NmU3ZvouPlM9o8MT6QAAAAAdzWUAAAAAAQAAAABDC9XNHooutDmiCvFtfAHubpz5NmU3ZvouPlM9o8MT6QAAAAUAAAAAAAAAAAAAAAAAAAABAAAAAgAAAAEAAAACAAAAAQAAAAIAAAABAAAAAgAAAAAAAAABAAAAAK7E3EfEBqnU1iAD/uF6JaMucX1IXNIdAPVE+wZcR8vWAAAAAQAAAAAAAAACo8MT6QAAAEB13pdbI045Jcl5IIrd2hcCaQQ+oQYOD1oxf168Y/1PjwVVAoyAehm0OysFhUopp0cSZzgm2viSuAhvyawF2loNXEfL1gAAAEC5alZQ5eTtnCCPkRuWp8vSBW0IgF/t927O6eT+P7dnMMbx/p/jeTwRuov+o+M9lTwMork4DjMacEbsmx7XsvcD",
+    "result_codes": {
+      "transaction": "tx_success",
+      "operations": ["op_success"]
+    },
+    "result_xdr": "AAAAAAAAAMj/////AAAAAgAAAAAAAAAA/////v////4AAAAA"
+  }
+}
