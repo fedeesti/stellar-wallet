@@ -1,13 +1,13 @@
 import albedo from '@albedo-link/intent';
-import { useState } from 'react';
+import useAuthPublicKey from './useAuthPublicKey';
 
 function useLoginWithAlbedo() {
-  const [publicKey, setPublicKey] = useState<string>();
+  const { onLogin } = useAuthPublicKey();
 
   const albedoGetPublicKey = async () => {
     try {
       const albedoResponse = await albedo.publicKey({});
-      setPublicKey(albedoResponse.pubkey);
+      onLogin(albedoResponse.pubkey);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -15,7 +15,7 @@ function useLoginWithAlbedo() {
     }
   };
 
-  return { albedoGetPublicKey, publicKey };
+  return { albedoGetPublicKey };
 }
 
 export default useLoginWithAlbedo;

@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import urlAccountViewer from '../../assets/url-illustration.svg';
 import { errorExceptions, errorPrivateKeyMessage } from '../../utils/constants';
+import useAuthPublicKey from '../../hooks/useAuthPublicKey';
 
 interface initialErrorState {
   status: boolean;
@@ -10,6 +11,7 @@ interface initialErrorState {
 function PrivateKeyLogin() {
   const [privateKey, setPrivateKey] = useState<string>('');
   const [error, setError] = useState<initialErrorState>({ status: false, message: '' });
+  const { onLogin } = useAuthPublicKey();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setPrivateKey(e.target.value);
@@ -56,6 +58,7 @@ function PrivateKeyLogin() {
           status: true,
           message: errorPrivateKeyMessage.empty,
         });
+        onLogin(privateKey);
     }
   };
 

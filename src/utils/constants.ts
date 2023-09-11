@@ -20,3 +20,9 @@ export enum TransactionError {
   INVALID_DESTINATION_ID = 'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
   AMOUNT_EMPTY = 'Please enter amount',
 }
+
+export enum MessageError {
+  INVALID_PRIVATE_KEY = 'The private key was invalid',
+  ERROR_FIND_BALANCE = 'Could not find XLM balance for this account',
+  ERROR_TRANSACTION_HISTORY = 'Could not find transaction history',
+}
