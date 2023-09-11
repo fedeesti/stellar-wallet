@@ -6,14 +6,14 @@ interface IProps {
 }
 
 function Balance({ publicKey }: IProps) {
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
-    setIsOpenModal(true);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsOpenModal(false);
+    setIsModalOpen(false);
   };
 
   return (
@@ -78,7 +78,7 @@ function Balance({ publicKey }: IProps) {
           </code>
         </div>
       </div>
-      {isOpenModal && <SendPayment signerAccountPublicKey={publicKey} closeModal={closeModal} />}
+      {isModalOpen && <SendPayment signerAccountPublicKey={publicKey} closeModal={closeModal} />}
     </section>
   );
 }
