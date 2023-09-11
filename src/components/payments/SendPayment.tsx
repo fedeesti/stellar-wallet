@@ -37,7 +37,6 @@ function SendPayment({ signerAccountPublicKey, closeModal }: IProps) {
   };
 
   const onSubmit = (values: any) => {
-    console.log(values);
     const { destinationId, amount } = values;
     sendPayments({ signerAccountPublicKey, destinationId, amount });
   };
