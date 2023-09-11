@@ -10,3 +10,9 @@ interface IContentModal {
   viewGenerateKeypair: boolean;
   viewAlbedoLogin: boolean;
 }
+
+export interface IPublicKeyContext {
+  publicKey: string | null;
+  onLogin: (privateKey: string) => void;
+  onLogout: () => void;
+}
