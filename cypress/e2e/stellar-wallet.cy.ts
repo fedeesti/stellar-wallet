@@ -395,7 +395,7 @@ describe('Dashboard Wallet', () => {
       cy.get('[data-cy="send-payment-destination-id-error"]')
         .should('exist')
         .contains(
-          'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G" or "M."',
+          'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
         );
       cy.get('@destionationIdContainer').find('input').clear();
     });
@@ -406,13 +406,13 @@ describe('Dashboard Wallet', () => {
 
       cy.intercept('POST', `${Cypress.env('URL_HORIZON')}/transactions`, {
         fixture: 'transaction-success.json',
-      }).as('successTransaction');
+      });
       cy.intercept(`${Cypress.env('URL_HORIZON')}/accounts/${signerAccountPublicKey}`, {
         fixture: 'signer-account.json',
-      }).as('signerAccountLoad');
+      });
       cy.intercept(`${Cypress.env('URL_HORIZON')}/accounts/${destinationId}`, {
         fixture: 'destionation-account.json',
-      }).as('destinationAccountLoad');
+      });
 
       cy.get('@destionationIdContainer').find('input').type(destinationId);
       cy.get('@amountContainer').find('input').type(amount);
@@ -421,6 +421,5 @@ describe('Dashboard Wallet', () => {
       cy.wait(500);
       cy.get('[data-cy="modal-container"]').should('not.exist');
     });
-    // cy.get('[]').should('exist').and('be.visible');
   });
 });
