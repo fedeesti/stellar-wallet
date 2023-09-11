@@ -17,6 +17,6 @@ export const errorPrivateKeyMessage = {
 
 export enum TransactionError {
   DESTINATION_ID_EMPTY = 'Please enter a valid Stellar or Federated address',
-  INVALID_DESTINATION_ID = 'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G" or "M."',
+  INVALID_DESTINATION_ID = 'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
   AMOUNT_EMPTY = 'Please enter amount',
 }
