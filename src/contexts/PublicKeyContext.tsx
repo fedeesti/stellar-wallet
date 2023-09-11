@@ -19,9 +19,19 @@ export default function AuthPublicKeyProvider({ children }: IProps) {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleLogin = (privateKey: string) => {
-    const accountPublicKey: string = getPublicKeyFromPrivateKey(privateKey);
-    setPublicKey(accountPublicKey);
+  const handleLogin = (key: string) => {
+    const initialLetterOfPrivateKey = 'S';
+    const initialLetterOfPublicKey = 'G';
+
+    if (key.charAt(0) === initialLetterOfPrivateKey) {
+      const accountPublicKey: string = getPublicKeyFromPrivateKey(key);
+      setPublicKey(accountPublicKey);
+    }
+
+    if (key.charAt(0) === initialLetterOfPublicKey) {
+      setPublicKey(key);
+    }
+
     navigate('/dashboard');
   };
 
