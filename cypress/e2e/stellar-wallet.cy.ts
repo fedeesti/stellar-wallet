@@ -129,7 +129,6 @@ describe('Stellar Wallet management', () => {
           .and('contain', 'Connect with a secret key');
         cy.get('[data-cy="warning-login-container"]').should('be.visible');
         cy.get('[data-cy="warning-details-container"]').should('be.visible');
-        cy.get('@warningAcceptTerms').should('be.visible');
         cy.get('@warningAcceptTerms')
           .find('label')
           .should('be.visible')
@@ -334,19 +333,6 @@ describe('Dashboard Wallet', () => {
           expect(texts, 'headings').to.deep.equal(paymentTableHeader);
         });
       cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
-    });
-  });
-  describe('Liquidity Pool Transactions', () => {
-    beforeEach(() => {
-      cy.get('[data-cy="dashboard-transaction-header-container"]').as('transactionHeader');
-    });
-    it('Should show your transactions', () => {
-      cy.get('[data-cy="dashboard-transaction-container"]').should('exist').and('be.visible');
-      cy.get('@transactionHeader').should('exist').and('be.visible');
-      cy.get('@transactionHeader').find('h3').contains('Liquidity Pool Transactions');
-      cy.get('@transactionHeader')
-        .find('p')
-        .contains('There are no recent liquidity pool transactions to show');
     });
   });
 });

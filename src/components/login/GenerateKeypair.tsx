@@ -66,11 +66,11 @@ function GenerateKeypair() {
 
   return (
     <div className="space-y-6" data-cy="modal-generate-keypair-container">
-      <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
+      <h3 className="text-4xl text-center font-normal" data-cy="modal-title">
         Generate a new keypair
       </h3>
       <div
-        className="flex flex-row gap-1 mb-6 p-4 rounded border-2 border-stellar-red-700 bg-stellar-red-800"
+        className="flex flex-row gap-1 mb-6 p-4 rounded border-2 border-stellar-error-border bg-stellar-error-bg"
         data-cy="generate-keypair-description-container"
       >
         <div className="pt-[0.4rem]" data-cy="generate-keypair-warning-svg">
@@ -84,7 +84,7 @@ function GenerateKeypair() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-6 h-4"
+            className="w-6 h-4 text-stellar-error"
           >
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M15 9l-6 6M9 9l6 6"></path>
@@ -121,13 +121,13 @@ function GenerateKeypair() {
       <div className="mb-4" data-cy="generate-keypair-keys-container">
         <div className="mb-6" data-cy="generate-keypair-public-container">
           <h4 className="text-sm font-medium mb-2">PUBLIC KEY</h4>
-          <code className="break-words bg-[#303448] text-sm border border-solid border-[#3a3e4d] rounded-sm px-1 py-0.5">
+          <code className="break-words bg-stellar-bg-secondary text-sm border border-solid border-stellar-border-primary rounded-sm px-1 py-0.5">
             {account.publicKey}
           </code>
         </div>
         <div className="mb-6" data-cy="generate-keypair-secret-container">
           <h4 className="text-sm font-medium mb-2">SECRET KEY</h4>
-          <code className="break-words bg-[#303448] text-sm border border-solid border-[#3a3e4d] rounded-sm px-1 py-0.5">
+          <code className="break-words bg-stellar-bg-secondary text-sm border border-solid border-stellar-border-primary rounded-sm px-1 py-0.5">
             {account.secretKey}
           </code>
         </div>
@@ -135,11 +135,11 @@ function GenerateKeypair() {
       <div>
         <div className="flex gap-2 flex-row" data-cy="generate-keypair-copy-text-container">
           <button
-            className="inline-flex gap-1.5 items-center"
+            className="inline-flex gap-1.5 items-center text-stellar-link hover:text-stellar-link-hover"
             onClick={() => copyToClipboard(textToCopy)}
             data-cy="generate-keypair-btn-copy-keys"
           >
-            <span className="text-sm">Copy keys</span>
+            <span className="text-sm font-semibold">Copy keys</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -167,7 +167,7 @@ function GenerateKeypair() {
         </div>
       </div>
       {error.status && (
-        <p className="text-stellar-red-400 font-normal" data-cy="generate-keypair-error-message">
+        <p className="text-stellar-error font-normal" data-cy="generate-keypair-error-message">
           {error.message}
         </p>
       )}
@@ -176,7 +176,7 @@ function GenerateKeypair() {
           type="checkbox"
           name="secret-key-accept"
           onChange={toggleStoredKeypair}
-          className="accent-stellar-violet-700 border-stellar-violet-700"
+          className="h-4 w-4 bg-stellar-bg-primary accent-stellar-btn-primary border-stellar-btn-primary shadow-xl"
         />
         <label htmlFor="secret-key-accept">I've stored my secret key in a safe place</label>
       </div>
@@ -185,7 +185,7 @@ function GenerateKeypair() {
           type="button"
           data-cy="generate-keypair-btn-close"
           onClick={() => connectAWallet()}
-          className="text-stellar-violet-700 hover:bg-stellar-violet-700 hover:text-stellar-gray-200 rounded border border-stellar-violet-700 text-sm font-medium px-5 py-2.5"
+          className="mb-8 bg-stellar-btn-primary font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-btn-hover cursor-pointer shadow-md shadow-black-600/20 transition-all hover:shadow-lg hover:shadow-black-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         >
           Close
         </button>

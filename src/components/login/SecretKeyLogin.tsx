@@ -61,11 +61,11 @@ function PrivateKeyLogin() {
 
   return (
     <>
-      <h3 className="text-2xl text-center font-medium text-gray-900" data-cy="modal-title">
+      <h3 className="text-4xl text-center font-normal" data-cy="modal-title">
         Connect with a secret key
       </h3>
       <div data-cy="login-secret-key-container">
-        <div className="flex flex-row gap-2 mb-6 p-4 rounded border-2 border-stellar-violet-900 bg-stellar-violet-800 text-stellar-ghostwhite">
+        <div className="flex flex-row gap-2 mb-6 p-4 rounded border-2 border-stellar-info-border bg-stellar-info-background">
           <div className="pt-1" data-cy="login-secret-key-info-svg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ function PrivateKeyLogin() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-6 h-4 text-stellar-violet-200"
+              className="w-6 h-4 text-stellar-link"
             >
               <circle cx="12" cy="12" r="10"></circle>
               <path d="M12 16v-4M12 8h.01"></path>
@@ -90,7 +90,7 @@ function PrivateKeyLogin() {
               <a
                 href="https://accountviewer.stellar.org"
                 target="_blank"
-                className="text-stellar-violet-200 hover:text-stellar-violet-100"
+                className="text-stellar-link hover:text-stellar-link-hover"
                 data-cy="login-secret-key-acount-viewer-url"
               >
                 https://accountviewer.stellar.org
@@ -98,7 +98,7 @@ function PrivateKeyLogin() {
               before entering your keys. Scammers can replicate this website on a different domain
               to steal your keys.
             </p>
-            <h3 className="py-3 text-lg leading-relaxed ">
+            <h3 className="py-3 text-xl leading-relaxed text-white">
               Did you know that password managers are a safer alternative to copying and pasting
               your secret keys?
             </h3>
@@ -118,10 +118,10 @@ function PrivateKeyLogin() {
             value={privateKey}
             onChange={onChangeInput}
             placeholder="Starts with S, example: SCHK…ZLJK"
-            className="py-2 px-3 border-2 bg-[transparent] border-solid border-stellar-gray-400 rounded focus:outline-none focus:border-stellar-violet-700"
+            className="py-2 px-3 border-2 bg-transparent border-solid border-stellar-border-secondary rounded hover:border-stellar-text-tertiary focus:outline-none focus:border-stellar-btn-primary"
           />
           {error.status && (
-            <p className="text-stellar-red-400 font-normal" data-cy="login-secret-key-form-errors">
+            <p className="text-stellar-error font-normal" data-cy="login-secret-key-form-errors">
               {error.message}
             </p>
           )}
@@ -131,7 +131,7 @@ function PrivateKeyLogin() {
             type="button"
             data-cy="login-secret-key-btn-connect"
             onClick={() => connectWithPrivateKey(privateKey)}
-            className="mb-8 bg-stellar-violet-700 font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-violet-500 cursor-pointer"
+            className="mb-8 bg-stellar-btn-primary font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-btn-hover cursor-pointer shadow-md shadow-black-600/20 transition-all hover:shadow-lg hover:shadow-black-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           >
             Connect
           </button>

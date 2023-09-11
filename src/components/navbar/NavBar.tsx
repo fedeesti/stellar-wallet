@@ -1,6 +1,6 @@
 function NavBar() {
   return (
-    <nav className="bg-stellar-gray-700 max-w-screen-xl p-12" data-cy="nav-container">
+    <nav className="bg-stellar-bg-primary p-12" data-cy="nav-container">
       <div className="flex items-center gap-2">
         <a href="https://www.stellar.org/" className="flex items-center" data-cy="nav-logo-link">
           <svg
@@ -15,7 +15,7 @@ function NavBar() {
           </svg>
         </a>
         <div
-          className="bg-[#5332e6] text-[#ffffff] uppercase text-sm font-medium py-0.2 px-1.5 rounded"
+          className="bg-stellar-btn-primary text-white uppercase text-sm font-medium py-0.2 px-1.5 rounded"
           data-cy="nav-btn-account-viewer"
         >
           Account Viewer

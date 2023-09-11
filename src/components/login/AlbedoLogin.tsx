@@ -30,7 +30,7 @@ function AlbedoLogin({ closeModal }: IProps) {
         <p className="text-center" data-cy="modal-albedo-information">
           Albedo is a browser wallet.
           <a
-            className="text-[#6260eb] hover:text-[#937eef] font-medium"
+            className="text-stellar-link hover:text-stellar-link-hover font-medium"
             href="https://albedo.link/"
             target="_blank"
             data-cy="modal-albedo-information-link"
@@ -51,11 +51,11 @@ function AlbedoLogin({ closeModal }: IProps) {
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#6260eb"
+            stroke="CurrentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-6 h-4"
+            className="w-6 h-4 text-stellar-link"
           >
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 16v-4M12 8h.01"></path>
@@ -72,7 +72,7 @@ function AlbedoLogin({ closeModal }: IProps) {
           type="button"
           data-cy="albedo-btn-connect"
           onClick={albedoGetPublicKey}
-          className="text-stellar-gray-200 bg-stellar-violet-700 font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-violet-500 cursor-pointer"
+          className="mb-8 bg-stellar-btn-primary font-medium rounded text-sm px-5 py-2.5 text-center hover:bg-stellar-btn-hover cursor-pointer shadow-md shadow-black-600/20 transition-all hover:shadow-lg hover:shadow-black-600/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         >
           Connect with Albedo
         </button>
@@ -80,7 +80,7 @@ function AlbedoLogin({ closeModal }: IProps) {
           type="button"
           data-cy="albedo-btn-cancel"
           onClick={closeModal}
-          className="text-stellar-violet-700 hover:bg-stellar-violet-700 hover:text-stellar-gray-200 rounded border border-stellar-violet-700 text-sm font-medium px-5 py-2.5"
+          className="text-stellar-link hover:bg-stellar-btn-primary hover:text-stellar-text-primary rounded border border-stellar-link text-sm font-medium px-5 py-2.5 mb-8"
         >
           Cancel
         </button>

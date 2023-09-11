@@ -16,18 +16,18 @@ function Modal({ content, changeContent, closeModal }: IProps) {
     content;
   return (
     <div
-      className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-gray-100 bg-stellar-black/90"
+      className="fixed w-full z-30 min-w-[360px] min-h-screen overflow-hidden left-0 inset-y-0 text-stellar-text-primary bg-stellar-black/90"
       onClick={closeModal}
     >
       <div
         data-cy="modal-container"
         onClick={(e) => e.stopPropagation()}
-        className="absolute w-4/5 max-w-[600px] bg-stellar-black z-[calc(30+1)] overflow-hidden -translate-x-2/4 translate-y-[-35%] mt-0 pt-14 pb-8 px-6 rounded-lg left-2/4 top-[35%]"
+        className="absolute w-4/5 max-w-[600px] bg-stellar-bg-primary z-[calc(30+1)] overflow-hidden -translate-x-2/4 translate-y-[-35%] mt-0 pt-14 pb-8 px-6 rounded-lg left-2/4 top-[35%]"
       >
         <div className="absolute cursor-pointer right-3 top-4">
           <button
             type="button"
-            className="bg-transparent text-stellar-gray-100 hover:text-stellar-violet-200 rounded-lg text-sm w-8 h-8 ml-auto"
+            className="bg-transparent text-stellar-text-primary hover:text-stellar-text-tertiary rounded-lg text-sm w-8 h-8 ml-auto"
             data-cy="modal-btn-close"
             onClick={closeModal}
           >
