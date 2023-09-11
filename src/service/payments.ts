@@ -9,6 +9,7 @@ import {
 } from 'stellar-sdk';
 
 interface ISendPayment {
+  signerAccountKeypair: Keypair;
   signerAccountPublicKey: string;
   destinationId: string;
   amount: string;
@@ -17,14 +18,12 @@ interface ISendPayment {
 const server = new Server(import.meta.env.VITE_URL_HORIZON);
 
 export async function sendPayments({
+  signerAccountKeypair,
   signerAccountPublicKey,
   destinationId,
   amount,
 }: ISendPayment) {
   try {
-    const signerAccountKeypair = Keypair.fromSecret(
-      'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF',
-    );
     const signerAccount = await server.loadAccount(signerAccountPublicKey);
 
     const transaction = new TransactionBuilder(signerAccount, {
