@@ -78,7 +78,7 @@ function Balance({ publicKey }: IProps) {
           </code>
         </div>
       </div>
-      {isOpenModal && <SendPayment closeModal={closeModal} />}
+      {isOpenModal && <SendPayment signerAccountPublicKey={publicKey} closeModal={closeModal} />}
     </section>
   );
 }
