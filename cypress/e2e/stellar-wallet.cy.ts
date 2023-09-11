@@ -8,6 +8,8 @@ describe('Stellar Wallet management', () => {
   beforeEach(() => {
     cy.get('[data-cy="home-generate-keypair"]').as('connectBtnGenerateKeyPair');
     cy.get('[data-cy="home-connect-secret-key"]').as('connectWithPrivateKey');
+    cy.get('[data-cy="home-container"]').as('homeContainer');
+    cy.get('[data-cy="dashboard-main-container"]').should('not.exist').as('dashboardContainer');
   });
   describe('UI Layout', () => {
     it('Should show a navbar', () => {
@@ -22,7 +24,7 @@ describe('Stellar Wallet management', () => {
         .and('have.text', 'Account Viewer');
     });
     it('Should show a home page with different options to connect to the wallet', () => {
-      cy.get('[data-cy="home-container"]').should('exist').and('be.visible');
+      cy.get('@homeContainer').should('exist').and('be.visible');
       cy.get('[data-cy="home-title"]').should('be.visible').and('contain', 'Connect with a wallet');
       cy.get('[data-cy="home-button-list-container"]').should('exist').and('be.visible');
 
@@ -32,6 +34,17 @@ describe('Stellar Wallet management', () => {
       cy.get('@connectWithPrivateKey')
         .should('be.visible')
         .and('contain', 'Connect with a secret key');
+    });
+    it('Should redirect to the Home page when you navigate to the account page without login', () => {
+      const urlDashboard = '/dashboard';
+
+      cy.get('@homeContainer').should('exist').and('be.visible');
+      cy.get('@dashboardContainer').should('not.exist');
+
+      cy.visit(`${Cypress.env('base_url')}${urlDashboard}`);
+
+      cy.get('@homeContainer').should('exist').and('be.visible');
+      cy.get('@dashboardContainer').should('not.exist');
     });
     it('Sould show a footer', () => {
       const urlStellarTermsOfService = `${Cypress.env('URL_STELLAR')}${Cypress.env(
