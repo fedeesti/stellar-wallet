@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from 'formik';
-import { sendPayments } from '../../service/payments';
+import { sendPaymentWithSecretKey } from '../../service/payments';
 import { TransactionError } from '../../utils/constants';
 
 interface IProps {
@@ -36,9 +36,11 @@ function SendPayment({ signerAccountPublicKey, closeModal }: IProps) {
     return errors;
   };
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: any) => {
     const { destinationId, amount } = values;
-    sendPayments({ signerAccountPublicKey, destinationId, amount });
+    await sendPaymentWithSecretKey({ signerAccountPublicKey, destinationId, amount });
+
+    closeModal();
   };
 
   return (
