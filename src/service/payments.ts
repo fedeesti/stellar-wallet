@@ -1,4 +1,5 @@
 import {
+  Account,
   Asset,
   BASE_FEE,
   Keypair,
@@ -7,7 +8,9 @@ import {
   Server,
   TransactionBuilder,
 } from 'stellar-sdk';
+import albedo from '@albedo-link/intent';
 import { decrypt } from './security/security';
+import { TransactionError } from '../utils/constants';
 
 interface ISendPayment {
   signerAccountPublicKey: string;
@@ -46,6 +49,48 @@ export async function sendPaymentWithSecretKey({
 
     return await server.submitTransaction(transaction);
   } catch (error) {
-    throw new Error('Failed to send transaction');
+    throw new Error(TransactionError.FAILED);
+  }
+}
+
+export async function sendPaymentWithAlbedo({
+  signerAccountPublicKey,
+  destinationId,
+  amount,
+}: ISendPayment) {
+  try {
+    const { sequence } = await server.loadAccount(signerAccountPublicKey);
+    const signerAccount = new Account(signerAccountPublicKey, sequence);
+
+    const transaction = new TransactionBuilder(signerAccount, {
+      fee: BASE_FEE,
+      networkPassphrase: Networks.TESTNET,
+    })
+      .addOperation(
+        Operation.payment({
+          destination: destinationId,
+          asset: Asset.native(),
+          amount: amount.toString(),
+        }),
+      )
+      .setTimeout(180)
+      .build();
+
+    const transactionXdr = transaction.toXDR();
+
+    const { signed_envelope_xdr } = await albedo.tx({
+      xdr: transactionXdr,
+      network: import.meta.env.ALBEDO_NETWORK,
+    });
+
+    if (!signed_envelope_xdr) {
+      throw new Error(TransactionError.ALBEDO_ERROR);
+    }
+
+    const signedTransaction = TransactionBuilder.fromXDR(signed_envelope_xdr, Networks.TESTNET);
+
+    return await server.submitTransaction(signedTransaction);
+  } catch (e) {
+    throw new Error(TransactionError.FAILED);
   }
 }
