@@ -2,6 +2,7 @@ import { ReactNode, createContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getPublicKeyFromPrivateKey } from '../service/stellar';
 import { IPublicKeyContext } from '../types/types';
+import { encrypt } from '../service/security/security';
 
 interface IProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ export const PublicKeyContext = createContext<IPublicKeyContext>(INITIAL_VALUE_C
 export default function AuthPublicKeyProvider({ children }: IProps) {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const navigate = useNavigate();
+  const SECRET_KEY = 'secret';
 
   const handleLogin = (key: string) => {
     const initialLetterOfPrivateKey = 'S';
@@ -25,6 +27,7 @@ export default function AuthPublicKeyProvider({ children }: IProps) {
 
     if (key.charAt(0) === initialLetterOfPrivateKey) {
       const accountPublicKey: string = getPublicKeyFromPrivateKey(key);
+      localStorage.setItem(SECRET_KEY, encrypt(key));
       setPublicKey(accountPublicKey);
     }
 
@@ -37,6 +40,7 @@ export default function AuthPublicKeyProvider({ children }: IProps) {
 
   const handleLogout = () => {
     setPublicKey(null);
+    localStorage.removeItem(SECRET_KEY);
   };
 
   const value: IPublicKeyContext = {
