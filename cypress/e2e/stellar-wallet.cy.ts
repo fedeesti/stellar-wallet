@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-import { Transaction } from 'stellar-sdk';
-
 beforeEach(() => {
   cy.visit(Cypress.env('base_url'));
 });
@@ -115,7 +113,7 @@ describe('Stellar Wallet management', () => {
           .contains('Cancel');
       });
     });
-    describe.only('connect with a secret key', () => {
+    describe('connect with a secret key', () => {
       beforeEach(() => {
         cy.get('@connectWithPrivateKey').click();
         cy.get('[data-cy="modal-container"]').as('modalContainer');
@@ -133,15 +131,11 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="warning-details-container"]').should('be.visible');
         cy.get('@warningAcceptTerms')
           .find('label')
-          .should('be.visible')
+          .should('exist')
           .and('contain', 'I understand and accept the risks of entering my secret key.');
-        cy.get('@warningAcceptTerms').find('input').should('be.visible');
-        cy.get('@warningAcceptTerms').find('input').should('not.be.checked');
-        cy.get('@warningBtnContinue')
-          .should('be.visible')
-          .and('contain', 'Continue')
-          .and('be.disabled');
-        cy.get('[data-cy="warning-btn-cancel"]').should('be.visible').and('contain', 'Cancel');
+        cy.get('@warningAcceptTerms').find('input').should('exist').and('not.be.checked');
+        cy.get('@warningBtnContinue').should('exist').and('contain', 'Continue').and('be.disabled');
+        cy.get('[data-cy="warning-btn-cancel"]').should('exist').and('contain', 'Cancel');
       });
       it('Should not be able to click the Continue button when not accepting terms in the warning modal', () => {
         cy.get('@modalContainer').should('exist').and('be.visible');
@@ -292,158 +286,172 @@ describe('Stellar Wallet management', () => {
       });
     });
   });
-});
 
-describe('Dashboard Wallet', () => {
-  beforeEach(() => {
-    cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
-  });
-  describe('Balance information section', () => {
+  describe('Dashboard Wallet', () => {
     beforeEach(() => {
-      cy.get('[data-cy="dashboard-balance-information"]').as('balanceInformation');
-      cy.get('[data-cy="dashboard-balance-public-key-container"]').as('balancePublicKey');
+      const privateKey = 'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF';
+
+      cy.get('@connectWithPrivateKey').click();
+      cy.get('[data-cy="warning-accept-terms"]').find('input').check();
+      cy.get('[data-cy="warning-btn-continue"]').click();
+
+      cy.get('[data-cy="login-secret-key-form"]').find('input').type(privateKey);
+      cy.get('[data-cy="login-secret-key-btn-connect"]').click();
+
+      cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
     });
-    it('Should show your balance in XLM', () => {
-      cy.get('[data-cy="dashboard-main-container"]').should('exist').and('be.visible');
-      cy.get('[data-cy="dashboard-balance-section-container"]').should('exist').and('be.visible');
-      cy.get('@balanceInformation').should('exist').and('be.visible');
-      cy.get('@balanceInformation').find('h3').contains('Your Balance');
-      cy.get('@balanceInformation').find('p').contains('Lumens (XLM)');
+    describe('Balance information section', () => {
+      beforeEach(() => {
+        cy.get('[data-cy="dashboard-balance-information"]').as('balanceInformation');
+        cy.get('[data-cy="dashboard-balance-public-key-container"]').as('balancePublicKey');
+      });
+      it('Should show your balance in XLM', () => {
+        cy.get('[data-cy="dashboard-main-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="dashboard-balance-section-container"]').should('exist').and('be.visible');
+        cy.get('@balanceInformation').should('exist').and('be.visible');
+        cy.get('@balanceInformation').find('h3').contains('Your Balance');
+        cy.get('@balanceInformation').find('p').contains('Lumens (XLM)');
 
-      cy.get('[data-cy="dashboard-balance-btn-container"]').should('exist').and('be.visible');
-      cy.get('@btnSendPayment').should('be.visible').contains('Send');
-      cy.get('[data-cy="dashboard-balance-btn-receive"]').should('be.visible').contains('Receive');
+        cy.get('[data-cy="dashboard-balance-btn-container"]').should('exist').and('be.visible');
+        cy.get('@btnSendPayment').should('be.visible').contains('Send');
+        cy.get('[data-cy="dashboard-balance-btn-receive"]')
+          .should('be.visible')
+          .contains('Receive');
 
-      cy.get('@balancePublicKey').should('exist').and('be.visible');
-      cy.get('@balancePublicKey')
-        .find('h3')
-        .should('be.visible')
-        .contains('Your Stellar Public Key');
-      cy.get('@balancePublicKey')
-        .find('code')
-        .invoke('text')
-        .then((text) => {
-          const firstLetter = text.trim()[0];
-          expect(firstLetter).to.equal('G');
+        cy.get('@balancePublicKey').should('exist').and('be.visible');
+        cy.get('@balancePublicKey')
+          .find('h3')
+          .should('be.visible')
+          .contains('Your Stellar Public Key');
+        cy.get('@balancePublicKey')
+          .find('code')
+          .invoke('text')
+          .then((text) => {
+            const firstLetter = text.trim()[0];
+            expect(firstLetter).to.equal('G');
+          });
+      });
+    });
+    describe('Payments History', () => {
+      beforeEach(() => {
+        cy.get('[data-cy="dashboard-payment-header-container"]').as('paymentHeader');
+      });
+      it('Should show your payments history', () => {
+        const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'MEMO', 'OPERATION ID'];
+
+        cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
+
+        cy.get('@paymentHeader').should('exist').and('be.visible');
+        cy.get('@paymentHeader').find('h3').contains('Payments History');
+        cy.get('@paymentHeader').find('p').contains('Hiding payments smaller than 0.5 XLM');
+
+        cy.get('[data-cy="dashboard-payment-table-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="dashboard-payment-thead"]')
+          .find('th')
+          .then((th) => {
+            const texts = Cypress._.map(th, 'innerText');
+            expect(texts, 'headings').to.deep.equal(paymentTableHeader);
+          });
+        cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
+      });
+    });
+    describe('Send Payment', () => {
+      beforeEach(() => {
+        cy.get('@btnSendPayment').click();
+
+        cy.get('[data-cy="send-payment-container"]').as('sendPaymentContainer');
+        cy.get('[data-cy="send-payment-destination-id"]').as('destionationIdContainer');
+        cy.get('[data-cy="send-payment-amount"]').as('amountContainer');
+        cy.get('[data-cy="send-payment-btn-send"]').as('btnSendPayment');
+      });
+      it('Should show a modal to send payments', () => {
+        cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="modal-btn-close"]').should('exist').and('be.visible');
+        cy.get('@sendPaymentContainer').should('exist').and('be.visible');
+        cy.get('[data-cy="send-payment-title"]').should('be.visible').contains('Send Lumens');
+        cy.get('[data-cy="send-payment-form"]').should('exist').and('be.visible');
+
+        cy.get('@destionationIdContainer').should('exist').and('be.visible');
+        cy.get('@destionationIdContainer')
+          .find('label')
+          .should('be.visible')
+          .contains('SENDING TO');
+        cy.get('@destionationIdContainer')
+          .find('input')
+          .should('be.visible')
+          .and('have.attr', 'placeholder', "Recipient's public key or federation address");
+        cy.get('[data-cy="send-payment-destination-id-error"]').should('not.exist');
+
+        cy.get('@amountContainer').should('exist').and('be.visible');
+        cy.get('@amountContainer').find('label').should('be.visible').contains('AMOUNT');
+        cy.get('@amountContainer')
+          .find('input')
+          .should('be.visible')
+          .and('have.attr', 'placeholder', 'Amount to send');
+        cy.get('@amountContainer').find('p').should('be.visible').contains('lumens');
+        cy.get('[data-cy="send-payment-amount-error"]').should('not.exist');
+
+        cy.get('@btnSendPayment').should('exist').and('be.visible').contains('Send');
+        cy.get('[data-cy="send-payment-btn-cancel"]')
+          .should('exist')
+          .and('be.visible')
+          .contains('Cancel');
+      });
+      it('Should show error messages', () => {
+        cy.get('@destionationIdContainer').find('input').click();
+        cy.get('@sendPaymentContainer').click({ force: true });
+        cy.get('[data-cy="send-payment-destination-id-error"]')
+          .should('exist')
+          .contains('Please enter a valid Stellar or Federated address');
+        cy.get('@destionationIdContainer').find('input').clear();
+
+        cy.get('@amountContainer').find('input').click();
+        cy.get('@sendPaymentContainer').click({ force: true });
+        cy.get('[data-cy="send-payment-amount-error"]')
+          .should('exist')
+          .contains('Please enter amount');
+        cy.get('@amountContainer').find('input').clear();
+
+        cy.get('@destionationIdContainer').find('input').type('hello');
+        cy.get('@sendPaymentContainer').click({ force: true });
+        cy.get('[data-cy="send-payment-destination-id-error"]')
+          .should('exist')
+          .contains(
+            'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
+          );
+        cy.get('@destionationIdContainer').find('input').clear();
+
+        cy.get('@destionationIdContainer').find('input').type('hello');
+        cy.get('@sendPaymentContainer').click({ force: true });
+        cy.get('[data-cy="send-payment-destination-id-error"]')
+          .should('exist')
+          .contains(
+            'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
+          );
+        cy.get('@destionationIdContainer').find('input').clear();
+      });
+      it('Should send payments successfully', () => {
+        const signerAccountPublicKey = 'GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF';
+        const destinationId = 'GBLIWVH4PMJDPGOO7BOHI53GTTL6XXL6EMQP7USWTQOWOK4UZEGDB2S3';
+        const amount = '10';
+
+        cy.intercept('POST', `${Cypress.env('URL_HORIZON')}/transactions`, {
+          fixture: 'transaction-success.json',
         });
-    });
-  });
-  describe('Payments History', () => {
-    beforeEach(() => {
-      cy.get('[data-cy="dashboard-payment-header-container"]').as('paymentHeader');
-    });
-    it('Should show your payments history', () => {
-      const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'MEMO', 'OPERATION ID'];
-
-      cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
-
-      cy.get('@paymentHeader').should('exist').and('be.visible');
-      cy.get('@paymentHeader').find('h3').contains('Payments History');
-      cy.get('@paymentHeader').find('p').contains('Hiding payments smaller than 0.5 XLM');
-
-      cy.get('[data-cy="dashboard-payment-table-container"]').should('exist').and('be.visible');
-      cy.get('[data-cy="dashboard-payment-thead"]')
-        .find('th')
-        .then((th) => {
-          const texts = Cypress._.map(th, 'innerText');
-          expect(texts, 'headings').to.deep.equal(paymentTableHeader);
+        cy.intercept(`${Cypress.env('URL_HORIZON')}/accounts/${signerAccountPublicKey}`, {
+          fixture: 'signer-account.json',
         });
-      cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
-    });
-  });
-  describe('Send Payment', () => {
-    beforeEach(() => {
-      cy.get('@btnSendPayment').click();
+        cy.intercept(`${Cypress.env('URL_HORIZON')}/accounts/${destinationId}`, {
+          fixture: 'destionation-account.json',
+        });
 
-      cy.get('[data-cy="send-payment-container"]').as('sendPaymentContainer');
-      cy.get('[data-cy="send-payment-destination-id"]').as('destionationIdContainer');
-      cy.get('[data-cy="send-payment-amount"]').as('amountContainer');
-      cy.get('[data-cy="send-payment-btn-send"]').as('btnSendPayment');
-    });
-    it('Should show a modal to send payments', () => {
-      cy.get('[data-cy="modal-container"]').should('exist').and('be.visible');
-      cy.get('[data-cy="modal-btn-close"]').should('exist').and('be.visible');
-      cy.get('@sendPaymentContainer').should('exist').and('be.visible');
-      cy.get('[data-cy="send-payment-title"]').should('be.visible').contains('Send Lumens');
-      cy.get('[data-cy="send-payment-form"]').should('exist').and('be.visible');
+        cy.get('@destionationIdContainer').find('input').type(destinationId);
+        cy.get('@amountContainer').find('input').type(amount);
+        cy.get('@btnSendPayment').click();
 
-      cy.get('@destionationIdContainer').should('exist').and('be.visible');
-      cy.get('@destionationIdContainer').find('label').should('be.visible').contains('SENDING TO');
-      cy.get('@destionationIdContainer')
-        .find('input')
-        .should('be.visible')
-        .and('have.attr', 'placeholder', "Recipient's public key or federation address");
-      cy.get('[data-cy="send-payment-destination-id-error"]').should('not.exist');
-
-      cy.get('@amountContainer').should('exist').and('be.visible');
-      cy.get('@amountContainer').find('label').should('be.visible').contains('AMOUNT');
-      cy.get('@amountContainer')
-        .find('input')
-        .should('be.visible')
-        .and('have.attr', 'placeholder', 'Amount to send');
-      cy.get('@amountContainer').find('p').should('be.visible').contains('lumens');
-      cy.get('[data-cy="send-payment-amount-error"]').should('not.exist');
-
-      cy.get('@btnSendPayment').should('exist').and('be.visible').contains('Send');
-      cy.get('[data-cy="send-payment-btn-cancel"]')
-        .should('exist')
-        .and('be.visible')
-        .contains('Cancel');
-    });
-    it('Should show error messages', () => {
-      cy.get('@destionationIdContainer').find('input').click();
-      cy.get('@sendPaymentContainer').click({ force: true });
-      cy.get('[data-cy="send-payment-destination-id-error"]')
-        .should('exist')
-        .contains('Please enter a valid Stellar or Federated address');
-      cy.get('@destionationIdContainer').find('input').clear();
-
-      cy.get('@amountContainer').find('input').click();
-      cy.get('@sendPaymentContainer').click({ force: true });
-      cy.get('[data-cy="send-payment-amount-error"]')
-        .should('exist')
-        .contains('Please enter amount');
-      cy.get('@amountContainer').find('input').clear();
-
-      cy.get('@destionationIdContainer').find('input').type('hello');
-      cy.get('@sendPaymentContainer').click({ force: true });
-      cy.get('[data-cy="send-payment-destination-id-error"]')
-        .should('exist')
-        .contains(
-          'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G" or "M."',
-        );
-      cy.get('@destionationIdContainer').find('input').clear();
-
-      cy.get('@destionationIdContainer').find('input').type('hello');
-      cy.get('@sendPaymentContainer').click({ force: true });
-      cy.get('[data-cy="send-payment-destination-id-error"]')
-        .should('exist')
-        .contains(
-          'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',
-        );
-      cy.get('@destionationIdContainer').find('input').clear();
-    });
-    it('Should send payments successfully', () => {
-      const signerAccountPublicKey = 'GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF';
-      const destinationId = 'GBLIWVH4PMJDPGOO7BOHI53GTTL6XXL6EMQP7USWTQOWOK4UZEGDB2S3';
-      const amount = '10';
-
-      cy.intercept('POST', `${Cypress.env('URL_HORIZON')}/transactions`, {
-        fixture: 'transaction-success.json',
+        cy.wait(500);
+        cy.get('[data-cy="modal-container"]').should('not.exist');
       });
-      cy.intercept(`${Cypress.env('URL_HORIZON')}/accounts/${signerAccountPublicKey}`, {
-        fixture: 'signer-account.json',
-      });
-      cy.intercept(`${Cypress.env('URL_HORIZON')}/accounts/${destinationId}`, {
-        fixture: 'destionation-account.json',
-      });
-
-      cy.get('@destionationIdContainer').find('input').type(destinationId);
-      cy.get('@amountContainer').find('input').type(amount);
-      cy.get('@btnSendPayment').click();
-
-      cy.wait(500);
-      cy.get('[data-cy="modal-container"]').should('not.exist');
     });
   });
 });
