@@ -1,6 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import { sendPaymentWithSecretKey } from '../../service/payments';
 import { TransactionError } from '../../utils/constants';
+import { IBuildPayment } from '../../types/types';
 
 interface IProps {
   signerAccountPublicKey: string;
@@ -8,12 +9,12 @@ interface IProps {
 }
 
 function SendPayment({ signerAccountPublicKey, closeModal }: IProps) {
-  const INITIAL_VALUES = {
+  const INITIAL_VALUES: IBuildPayment = {
     destinationId: '',
     amount: '',
   };
 
-  const validate = (values: any) => {
+  const validate = (values: IBuildPayment) => {
     const errors: { destinationId?: string; amount?: string } = {};
     const regExOnlyNumbersAndUppercaseLetters = /^[0-9A-Z]+$/;
     const minNumberOfCharacters = 56;
@@ -36,7 +37,7 @@ function SendPayment({ signerAccountPublicKey, closeModal }: IProps) {
     return errors;
   };
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: IBuildPayment) => {
     const { destinationId, amount } = values;
     await sendPaymentWithSecretKey({ signerAccountPublicKey, destinationId, amount });
 

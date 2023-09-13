@@ -16,3 +16,8 @@ export interface IPublicKeyContext {
   onLogin: (privateKey: string) => void;
   onLogout: () => void;
 }
+
+export interface IBuildPayment {
+  destinationId: string;
+  amount: string;
+}
