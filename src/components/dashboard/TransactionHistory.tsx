@@ -37,7 +37,16 @@ function TransactionHistory(transactions: IProps) {
               return (
                 <tr className="border-b border-[#3a3e4d]" key={transaction.operationId}>
                   <td className="px-6 py-4 text-sm bg-[#303448]">{transaction.date}</td>
-                  <td className="px-6 py-4 text-xs">{transaction.address}</td>
+                  <td className="px-6 py-4 text-xs flex flex-row items-center gap-2">
+                    <div className="w-11 h-11 bg-stellar-bg-secondary border border-stellar-border-primary rounded-full flex items-center justify-center">
+                      <img
+                        src={transaction.profile}
+                        alt="Transaction svg"
+                        className="w-[45%] h-[45%]"
+                      />
+                    </div>
+                    {transaction.address}
+                  </td>
                   <td className="px-6 py-4 text-xs">{transaction.amount}</td>
                   <td className="pl-6 py-4 text-xs">{transaction.operationId}</td>
                 </tr>

@@ -1,7 +1,8 @@
 import { ServerApi } from 'stellar-sdk';
-import { getShorted, shortenDate } from '../../utils/shortenString';
+import { shortenDate } from '../../utils/shortenString';
 import getTransactionAmountAndAddress from '../../utils/transaction';
 import Transaction from '../../domain/Transaction';
+import { getRandomProfile } from '../../utils/profile';
 
 export default function mapStellarResponseToTransaction(
   publicKey: string,
@@ -28,5 +29,7 @@ export default function mapStellarResponseToTransaction(
     starting_balance,
   );
 
-  return new Transaction(shortenDate(created_at), address, amount, id);
+  const profile = getRandomProfile();
+
+  return new Transaction(shortenDate(created_at), profile, address, amount, id);
 }
