@@ -363,7 +363,7 @@ describe('Stellar Wallet management', () => {
           });
       });
     });
-    describe.only('Payments History', () => {
+    describe('Payments History', () => {
       beforeEach(() => {
         cy.get('[data-cy="dashboard-payment-container"]').as('dashboardPaymentContainer');
       });
@@ -504,6 +504,7 @@ describe('Stellar Wallet management', () => {
         cy.get('@btnSendPayment').click();
 
         cy.wait(500);
+        cy.url().should('include', '/dashboard');
         cy.get('[data-cy="modal-container"]').should('not.exist');
       });
     });
