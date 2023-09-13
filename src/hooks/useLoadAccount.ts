@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
-import { ServerApi } from 'stellar-sdk/lib/server_api';
 import { findNativeBalance, loadTransactionHistory } from '../service/stellar';
+import Transaction from '../domain/Transaction';
 
 function useLoadAccount(publicKey: string) {
-  const [records, setRecords] = useState<ServerApi.OperationRecord[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState<string>();
 
   const onAccountLoaded = async () => {
     let accountBalance: string = await findNativeBalance(publicKey);
-    const accountRecords: ServerApi.OperationRecord[] = await loadTransactionHistory(publicKey);
+    const accountTransactions: Transaction[] = await loadTransactionHistory(publicKey);
 
     accountBalance = accountBalance ? accountBalance : '0';
 
     setBalance(accountBalance);
-    setRecords(accountRecords);
+    setTransactions(accountTransactions);
   };
 
   useEffect(() => {
     onAccountLoaded();
   }, []);
 
-  return { balance, records };
+  return { balance, transactions };
 }
 
 export default useLoadAccount;
