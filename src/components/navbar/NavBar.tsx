@@ -3,7 +3,7 @@ import { getRandomProfile } from '../../utils/profile';
 import { getShorted } from '../../utils/shortenString';
 
 function NavBar() {
-  const { publicKey } = useAuthPublicKey();
+  const { publicKey, onLogout } = useAuthPublicKey();
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(publicKey as string);
@@ -68,6 +68,7 @@ function NavBar() {
           <button
             className="border-l-2 border-l-stellar-border-primary pl-4 font-semibold text-stellar-link hover:text-stellar-link-hover"
             data-cy="nav-btn-sign-out"
+            onClick={onLogout}
           >
             Sign out
           </button>
