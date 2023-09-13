@@ -1,6 +1,8 @@
 import { Keypair, Server } from 'stellar-sdk';
 import { ServerApi } from 'stellar-sdk/lib/server_api';
 import { MessageError } from '../utils/constants';
+import mapStellarResponseToTransaction from './stellar/stellarMapper';
+import Transaction from '../domain/Transaction';
 
 const server = new Server(import.meta.env.VITE_URL_HORIZON);
 
@@ -25,8 +27,9 @@ export async function findNativeBalance(signerAccountPublicKey: string): Promise
 
 export async function loadTransactionHistory(
   signerAccountPublicKey: string,
-): Promise<ServerApi.OperationRecord[]> {
+): Promise<Transaction[]> {
   try {
+    const transactionList: Transaction[] = [];
     const transactionLimit = 100;
 
     const transaction: ServerApi.CollectionPage<ServerApi.PaymentOperationRecord> = await server
@@ -36,7 +39,11 @@ export async function loadTransactionHistory(
       .limit(transactionLimit)
       .call();
 
-    return transaction.records;
+    transaction.records.forEach((record) => {
+      transactionList.push(mapStellarResponseToTransaction(signerAccountPublicKey, record));
+    });
+
+    return transactionList;
   } catch (error) {
     throw new Error(MessageError.ERROR_TRANSACTION_HISTORY);
   }
