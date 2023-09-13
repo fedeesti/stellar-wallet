@@ -1,7 +1,9 @@
 import { Formik, Form, Field } from 'formik';
-import { sendPaymentWithSecretKey } from '../../service/payments';
+import { sendPaymentWithAlbedo, sendPaymentWithSecretKey } from '../../service/payments';
 import { TransactionError } from '../../utils/constants';
 import { IBuildPayment } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
+import { getFromLocalStorage } from '../../service/storage/storage';
 
 interface IProps {
   signerAccountPublicKey: string;
@@ -9,6 +11,8 @@ interface IProps {
 }
 
 function SendPayment({ signerAccountPublicKey, closeModal }: IProps) {
+  const navigate = useNavigate();
+
   const INITIAL_VALUES: IBuildPayment = {
     destinationId: '',
     amount: '',
@@ -39,9 +43,14 @@ function SendPayment({ signerAccountPublicKey, closeModal }: IProps) {
 
   const onSubmit = async (values: IBuildPayment) => {
     const { destinationId, amount } = values;
-    await sendPaymentWithSecretKey({ signerAccountPublicKey, destinationId, amount });
 
-    closeModal();
+    if (getFromLocalStorage(import.meta.env.VITE_SAVE_PRIVATE_KEY)) {
+      await sendPaymentWithSecretKey({ signerAccountPublicKey, destinationId, amount });
+    } else {
+      await sendPaymentWithAlbedo({ signerAccountPublicKey, destinationId, amount });
+    }
+
+    navigate(0);
   };
 
   return (
