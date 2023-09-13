@@ -21,3 +21,9 @@ export interface IBuildPayment {
   destinationId: string;
   amount: string;
 }
+
+export interface ISendPayment {
+  signerAccountPublicKey: string;
+  destinationId: string;
+  amount: string;
+}

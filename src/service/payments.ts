@@ -11,12 +11,7 @@ import {
 import albedo from '@albedo-link/intent';
 import { decrypt } from './security/security';
 import { TransactionError } from '../utils/constants';
-
-interface ISendPayment {
-  signerAccountPublicKey: string;
-  destinationId: string;
-  amount: string;
-}
+import { ISendPayment } from '../types/types';
 
 const server = new Server(import.meta.env.VITE_URL_HORIZON);
 
