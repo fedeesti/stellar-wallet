@@ -1,4 +1,4 @@
-export interface Keypair {
+export interface IKeypair {
   publicKey: string;
   secretKey: string;
 }
@@ -15,4 +15,15 @@ export interface IPublicKeyContext {
   publicKey: string | null;
   onLogin: (privateKey: string) => void;
   onLogout: () => void;
+}
+
+export interface IBuildPayment {
+  destinationId: string;
+  amount: string;
+}
+
+export interface ISendPayment {
+  signerAccountPublicKey: string;
+  destinationId: string;
+  amount: string;
 }

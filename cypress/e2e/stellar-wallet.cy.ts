@@ -430,7 +430,7 @@ describe('Stellar Wallet management', () => {
           );
         cy.get('@destionationIdContainer').find('input').clear();
       });
-      it('Should send payments successfully', () => {
+      it('Should send payments with private key successfully', () => {
         const signerAccountPublicKey = 'GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF';
         const destinationId = 'GBLIWVH4PMJDPGOO7BOHI53GTTL6XXL6EMQP7USWTQOWOK4UZEGDB2S3';
         const amount = '10';
