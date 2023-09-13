@@ -1,4 +1,10 @@
-function TransactionHistory() {
+import Transaction from '../../domain/Transaction';
+
+interface IProps {
+  transactions: Transaction[];
+}
+
+function TransactionHistory(transactions: IProps) {
   return (
     <section className="bg-[#292d3e] px-8 mb-12" data-cy="dashboard-payment-container">
       <div className="mb-8" data-cy="dashboard-payment-header-container">
@@ -21,22 +27,22 @@ function TransactionHistory() {
               <th scope="col" className="px-6 py-3">
                 AMOUNT
               </th>
-              <th scope="col" className="px-6 py-3">
-                MEMO
-              </th>
               <th scope="col" className="pl-6 py-3">
                 OPERATION ID
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr className="border-b border-[#3a3e4d]" data-cy="dashboard-payment-tbody">
-              <td className="px-6 py-4 text-sm bg-[#303448]">8/2/1992 17:00</td>
-              <td className="px-6 py-4 text-xs">GAAAA…AAAAA</td>
-              <td className="px-6 py-4 text-xs">+50,61 XLM</td>
-              <td className="px-6 py-4 text-xs"></td>
-              <td className="pl-6 py-4 text-xs">$2999</td>
-            </tr>
+          <tbody data-cy="dashboard-payment-tbody">
+            {transactions.transactions.map((transaction: Transaction) => {
+              return (
+                <tr className="border-b border-[#3a3e4d]" key={transaction.operationId}>
+                  <td className="px-6 py-4 text-sm bg-[#303448]">{transaction.date}</td>
+                  <td className="px-6 py-4 text-xs">{transaction.address}</td>
+                  <td className="px-6 py-4 text-xs">{transaction.amount}</td>
+                  <td className="pl-6 py-4 text-xs">{transaction.operationId}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

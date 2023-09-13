@@ -5,7 +5,7 @@ import useLoadAccount from '../hooks/useLoadAccount';
 
 function DashboardWallet() {
   const { publicKey } = useAuthPublicKey();
-  const { balance } = useLoadAccount(publicKey as string);
+  const { balance, transactions } = useLoadAccount(publicKey as string);
 
   return (
     <main
@@ -13,7 +13,7 @@ function DashboardWallet() {
       data-cy="dashboard-main-container"
     >
       <Balance publicKey={publicKey as string} balance={balance as string} />
-      <TransactionHistory />
+      <TransactionHistory transactions={transactions} />
     </main>
   );
 }
