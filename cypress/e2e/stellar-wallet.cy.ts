@@ -305,9 +305,6 @@ describe('Stellar Wallet management', () => {
       cy.intercept(`${URL_HORIZON}/accounts/${signerAccountPublicKey}`, {
         fixture: 'signer-account.json',
       });
-      cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
-        fixture: 'transaction-history.json',
-      }).as('transactionHistory');
       cy.get('[data-cy="login-secret-key-btn-connect"]').click();
 
       cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
@@ -366,19 +363,35 @@ describe('Stellar Wallet management', () => {
           });
       });
     });
-    describe('Payments History', () => {
+    describe.only('Payments History', () => {
       beforeEach(() => {
-        cy.get('[data-cy="dashboard-payment-header-container"]').as('paymentHeader');
+        cy.get('[data-cy="dashboard-payment-container"]').as('dashboardPaymentContainer');
+      });
+      it('Should show a message that there are no transactions', () => {
+        cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
+          fixture: 'without-transaction-history.json',
+        });
+
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@dashboardPaymentContainer').should('exist').and('be.visible');
+
+        cy.get('@dashboardPaymentContainer').find('h3').contains('Payments History');
+        cy.get('@dashboardPaymentContainer').find('p').contains('There are no payments to show');
       });
       it('Should show your payments history', () => {
         const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'OPERATION ID'];
 
-        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
-        cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
+        cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
+          fixture: 'transaction-history.json',
+        }).as('transactionHistory');
 
-        cy.get('@paymentHeader').should('exist').and('be.visible');
-        cy.get('@paymentHeader').find('h3').contains('Payments History');
-        cy.get('@paymentHeader').find('p').contains('Hiding payments smaller than 0.5 XLM');
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@dashboardPaymentContainer').should('exist').and('be.visible');
+
+        cy.get('@dashboardPaymentContainer').find('h3').contains('Payments History');
+        cy.get('@dashboardPaymentContainer')
+          .find('p')
+          .contains('Hiding payments smaller than 0.5 XLM');
 
         cy.get('[data-cy="dashboard-payment-table-container"]').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-payment-thead"]')
