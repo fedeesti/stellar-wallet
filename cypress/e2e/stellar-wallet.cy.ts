@@ -312,6 +312,7 @@ describe('Stellar Wallet management', () => {
 
       cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
       cy.get('[data-cy="nav-login-container"]').as('navbarLoginContainer');
+      cy.get('[data-cy="nav-btn-sign-out"]').as('navBtnLogOut');
     });
     describe('Login container on Navbar', () => {
       it('Should show a button to copy the public key and another to sign out', () => {
@@ -319,10 +320,17 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="nav-login-btn-copy"]').should('exist').and('be.visible');
         cy.get('[data-cy="nav-account-icon"]').should('exist').and('be.visible');
         cy.get('[data-cy="nav-login-public-key"]').should('exist').and('be.visible');
-        cy.get('[data-cy="nav-btn-sign-out"]')
-          .should('exist')
-          .and('be.visible')
-          .contains('Sign out');
+        cy.get('@navBtnLogOut').should('exist').and('be.visible').contains('Sign out');
+      });
+      it('Should log out of the account', () => {
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.url().should('include', '/dashboard');
+
+        cy.get('@navBtnLogOut').click();
+
+        cy.url().should('not.include', '/dashboard');
+        cy.get('@navbarLoginContainer').should('not.exist');
+        cy.get('@homeContainer').should('exist').and('be.visible');
       });
     });
     describe('Balance information section', () => {
