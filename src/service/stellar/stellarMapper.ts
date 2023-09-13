@@ -28,5 +28,5 @@ export default function mapStellarResponseToTransaction(
     starting_balance,
   );
 
-  return new Transaction(shortenDate(created_at), getShorted(address), amount, id);
+  return new Transaction(shortenDate(created_at), address, amount, id);
 }

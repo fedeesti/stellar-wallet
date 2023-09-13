@@ -27,9 +27,9 @@ export default function getTransactionAmountAndAddress(
     amount = `-${recordAmount} XLM`;
   }
 
-  if (type === 'create_account' && asset === 'native') {
+  if (type === 'create_account') {
     address = 'Fund';
-    amount = `Found +${startingbalance} XLM`;
+    amount = `+${startingbalance} XLM`;
   }
 
   return { address, amount };
