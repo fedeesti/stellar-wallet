@@ -80,7 +80,7 @@ export async function sendPaymentWithAlbedo({
 
     const { signed_envelope_xdr } = await albedo.tx({
       xdr: transactionXdr,
-      network: import.meta.env.ALBEDO_NETWORK,
+      network: Networks.TESTNET,
     });
 
     if (!signed_envelope_xdr) {
