@@ -1,3 +1,4 @@
+import { TransactionType } from './constants';
 import { getShorted } from './shortenString';
 
 interface ITransactionAmountAndAddress {
@@ -17,17 +18,25 @@ export default function getTransactionAmountAndAddress(
   let amount = '';
   let address = '';
 
-  if (type === 'payment' && account !== publicKey && asset === 'native') {
+  if (
+    type === TransactionType.PAYMENT_TYPE &&
+    account !== publicKey &&
+    asset === TransactionType.ASSET_NATIVE
+  ) {
     address = getShorted(account);
     amount = `+${recordAmount} XLM`;
   }
 
-  if (type === 'payment' && account === publicKey && asset === 'native') {
+  if (
+    type === TransactionType.PAYMENT_TYPE &&
+    account === publicKey &&
+    asset === TransactionType.ASSET_NATIVE
+  ) {
     address = getShorted(destination);
     amount = `-${recordAmount} XLM`;
   }
 
-  if (type === 'create_account') {
+  if (type === TransactionType.CREATE_ACCOUNT_TYPE) {
     address = 'Fund';
     amount = `+${startingbalance} XLM`;
   }
