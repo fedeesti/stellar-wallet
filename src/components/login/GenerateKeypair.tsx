@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { storedKeypairErrorMessage } from '../../utils/constants';
 import { createAccount } from '../../service/createAccount ';
-import { Keypair } from '../../types/types';
+import { IKeypair } from '../../types/types';
 
 interface initialErrorState {
   status: boolean;
   message: string;
 }
 
-const INITIAL_STATE: Keypair = {
+const INITIAL_STATE: IKeypair = {
   publicKey: '',
   secretKey: '',
 };
 
 function GenerateKeypair() {
-  const [account, setAccount] = useState<Keypair>(INITIAL_STATE);
+  const [account, setAccount] = useState<IKeypair>(INITIAL_STATE);
   const [isKeypairStored, setIsKeypairStored] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [error, setError] = useState<initialErrorState>({ status: false, message: '' });

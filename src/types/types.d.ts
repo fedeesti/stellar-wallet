@@ -1,4 +1,4 @@
-export interface Keypair {
+export interface IKeypair {
   publicKey: string;
   secretKey: string;
 }
