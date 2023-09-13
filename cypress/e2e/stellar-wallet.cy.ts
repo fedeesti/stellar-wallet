@@ -346,7 +346,7 @@ describe('Stellar Wallet management', () => {
       beforeEach(() => {
         cy.get('[data-cy="dashboard-payment-header-container"]').as('paymentHeader');
       });
-      it('Should show your payments history', () => {
+      it.only('Should show your payments history', () => {
         const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'OPERATION ID'];
 
         cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
@@ -368,6 +368,11 @@ describe('Stellar Wallet management', () => {
           .and('be.visible')
           .as('paymentTableBody');
         cy.get('@paymentTableBody').find('tr').should('have.length', 3);
+
+        cy.get('[data-cy="dashboard-payment-tbody-icon-profile"]')
+          .should('exist')
+          .and('be.visible')
+          .and('have.attr', 'alt', 'Transaction icon');
       });
     });
     describe('Send Payment', () => {

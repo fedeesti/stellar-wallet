@@ -41,8 +41,9 @@ function TransactionHistory(transactions: IProps) {
                     <div className="w-11 h-11 bg-stellar-bg-secondary border border-stellar-border-primary rounded-full flex items-center justify-center">
                       <img
                         src={transaction.profile}
-                        alt="Transaction svg"
+                        alt="Transaction icon"
                         className="w-[45%] h-[45%]"
+                        data-cy="dashboard-payment-tbody-icon-profile"
                       />
                     </div>
                     {transaction.address}
