@@ -6,5 +6,5 @@ export function shortenDate(date: string): string {
   const regex = /[A-Z]/;
   const splitDate = date.split(regex);
 
-  return `${splitDate[0]} ${splitDate[1].slice(0, 5)}`;
+  return `${splitDate[0].split('-').reverse().join('/')} ${splitDate[1].slice(0, 5)}`;
 }
