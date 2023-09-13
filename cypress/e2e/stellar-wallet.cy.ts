@@ -1,5 +1,15 @@
 /// <reference types="cypress" />
 
+import {
+  URL_HORIZON,
+  URL_TRANSACTION_HISTORY,
+  amount,
+  destinationId,
+  privateKey,
+  signerAccountPublicKey,
+  urlAccountViewer,
+} from '../support/constants';
+
 beforeEach(() => {
   cy.visit(Cypress.env('base_url'));
 });
@@ -149,8 +159,6 @@ describe('Stellar Wallet management', () => {
         cy.get('@loginPrivateKeyContainer').should('not.exist');
       });
       it('Should show the login modal when clicking on continue in the warning modal', () => {
-        const urlAccountViewer = 'https://accountviewer.stellar.org';
-
         cy.get('@warningAcceptTerms').find('input').check();
         cy.get('@warningBtnContinue').click();
 
@@ -204,8 +212,6 @@ describe('Stellar Wallet management', () => {
         }
       });
       it('Should log in successfully', () => {
-        const privateKey = 'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF';
-
         cy.get('@warningAcceptTerms').find('input').check();
         cy.get('@warningBtnContinue').click();
 
@@ -289,13 +295,17 @@ describe('Stellar Wallet management', () => {
 
   describe('Dashboard Wallet', () => {
     beforeEach(() => {
-      const privateKey = 'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF';
-
       cy.get('@connectWithPrivateKey').click();
       cy.get('[data-cy="warning-accept-terms"]').find('input').check();
       cy.get('[data-cy="warning-btn-continue"]').click();
 
       cy.get('[data-cy="login-secret-key-form"]').find('input').type(privateKey);
+      cy.intercept(`${URL_HORIZON}/accounts/${signerAccountPublicKey}`, {
+        fixture: 'signer-account.json',
+      });
+      cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
+        fixture: 'transaction-history.json',
+      }).as('transactionHistory');
       cy.get('[data-cy="login-secret-key-btn-connect"]').click();
 
       cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
@@ -337,7 +347,7 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="dashboard-payment-header-container"]').as('paymentHeader');
       });
       it('Should show your payments history', () => {
-        const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'MEMO', 'OPERATION ID'];
+        const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'OPERATION ID'];
 
         cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
 
@@ -352,7 +362,12 @@ describe('Stellar Wallet management', () => {
             const texts = Cypress._.map(th, 'innerText');
             expect(texts, 'headings').to.deep.equal(paymentTableHeader);
           });
-        cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
+        cy.wait('@transactionHistory');
+        cy.get('[data-cy="dashboard-payment-tbody"]')
+          .should('exist')
+          .and('be.visible')
+          .as('paymentTableBody');
+        cy.get('@paymentTableBody').find('tr').should('have.length', 3);
       });
     });
     describe('Send Payment', () => {
@@ -431,10 +446,6 @@ describe('Stellar Wallet management', () => {
         cy.get('@destionationIdContainer').find('input').clear();
       });
       it('Should send payments with private key successfully', () => {
-        const signerAccountPublicKey = 'GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF';
-        const destinationId = 'GBLIWVH4PMJDPGOO7BOHI53GTTL6XXL6EMQP7USWTQOWOK4UZEGDB2S3';
-        const amount = '10';
-
         cy.intercept('POST', `${Cypress.env('URL_HORIZON')}/transactions`, {
           fixture: 'transaction-success.json',
         });
