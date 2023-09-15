@@ -9,7 +9,7 @@ function DashboardWallet() {
 
   return (
     <main
-      className="text-stellar-text-primary bg-stellar-bg-primary"
+      className="text-stellar-text-primary bg-stellar-bg-primary overflow-hidden"
       data-cy="dashboard-main-container"
     >
       <Balance publicKey={publicKey as string} balance={balance as string} />
