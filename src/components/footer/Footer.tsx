@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <footer className="px-12 bg-stellar-bg-primary text-white" data-cy="footer-container">
-      <div className="w-full pb-12 pt-6 border-t border-stellar-border-secondary md:flex md:items-center md:justify-between">
-        <ul className="flex flex-wrap items-center mt-3 font-bold hover:text-stellar-text-secondary dark:text-gray-400 sm:mt-0">
+    <footer className="px-4 sm:px-12 bg-stellar-bg-primary text-white" data-cy="footer-container">
+      <div className="w-full pb-12 pt-6 border-t border-stellar-border-secondary flex items-center justify-between">
+        <ul className="flex items-center font-bold hover:text-stellar-text-secondary">
           <li data-cy="footer-terms-of-service-title">
             <a
               href="https://www.stellar.org/terms-of-service"
