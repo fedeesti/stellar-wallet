@@ -24,7 +24,8 @@ describe('Stellar Wallet management', () => {
   describe('UI Layout', () => {
     it('Should show a navbar', () => {
       cy.get('[data-cy="nav-container"]').should('exist').and('be.visible');
-      cy.get('[data-cy="nav-login-container"]').should('not.exist');
+      cy.get('[data-cy="nav-login-btn-copy"]').should('not.exist');
+      cy.get('[data-cy="nav-btn-sign-out"]').should('not.exist');
       cy.get('[data-cy="nav-logo"]').should('be.visible');
       cy.get('[data-cy="nav-logo-link"]')
         .should('be.visible')
@@ -220,7 +221,8 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="login-secret-key-btn-connect"]').click();
 
         cy.url().should('include', '/dashboard');
-        cy.get('[data-cy="nav-login-container"]').should('exist').and('be.visible');
+        cy.get('[data-cy="nav-btn-sign-out"]').should('exist').and('be.visible');
+        cy.get('[data-cy="nav-login-public-key"]').should('exist').and('be.visible');
       });
     });
     describe('Generate key pair for a new account', () => {
@@ -308,25 +310,26 @@ describe('Stellar Wallet management', () => {
       cy.get('[data-cy="login-secret-key-btn-connect"]').click();
 
       cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
-      cy.get('[data-cy="nav-login-container"]').as('navbarLoginContainer');
-      cy.get('[data-cy="nav-btn-sign-out"]').as('navBtnLogOut');
+      cy.get('[data-cy="nav-login-btn-copy"]').as('loginBtnCopyPublicKey');
+      cy.get('[data-cy="nav-btn-sign-out"]').as('loginBtnSignOut');
     });
     describe('Login container on Navbar', () => {
       it('Should show a button to copy the public key and another to sign out', () => {
-        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
-        cy.get('[data-cy="nav-login-btn-copy"]').should('exist').and('be.visible');
+        cy.get('@loginBtnCopyPublicKey').should('exist').and('be.visible');
         cy.get('[data-cy="nav-account-icon"]').should('exist').and('be.visible');
         cy.get('[data-cy="nav-login-public-key"]').should('exist').and('be.visible');
-        cy.get('@navBtnLogOut').should('exist').and('be.visible').contains('Sign out');
+        cy.get('@loginBtnSignOut').should('exist').and('be.visible').contains('Sign out');
       });
       it('Should log out of the account', () => {
-        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@loginBtnCopyPublicKey').should('exist').and('be.visible');
+        cy.get('@loginBtnSignOut').should('exist').and('be.visible').contains('Sign out');
         cy.url().should('include', '/dashboard');
 
-        cy.get('@navBtnLogOut').click();
+        cy.get('@loginBtnSignOut').click();
 
         cy.url().should('not.include', '/dashboard');
-        cy.get('@navbarLoginContainer').should('not.exist');
+        cy.get('@loginBtnCopyPublicKey').should('not.exist');
+        cy.get('@loginBtnSignOut').should('not.exist');
         cy.get('@homeContainer').should('exist').and('be.visible');
       });
     });
@@ -336,7 +339,8 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="dashboard-balance-public-key-container"]').as('balancePublicKey');
       });
       it('Should show user balance in XLM', () => {
-        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@loginBtnCopyPublicKey').should('exist').and('be.visible');
+        cy.get('@loginBtnSignOut').should('exist').and('be.visible').contains('Sign out');
         cy.get('[data-cy="dashboard-main-container"]').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-balance-section-container"]').should('exist').and('be.visible');
         cy.get('@balanceInformation').should('exist').and('be.visible');
@@ -372,7 +376,7 @@ describe('Stellar Wallet management', () => {
           fixture: 'without-transaction-history.json',
         });
 
-        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@loginBtnCopyPublicKey').should('exist').and('be.visible');
         cy.get('@dashboardPaymentContainer').should('exist').and('be.visible');
 
         cy.get('@dashboardPaymentContainer').find('h3').contains('Payments History');
@@ -385,7 +389,7 @@ describe('Stellar Wallet management', () => {
           fixture: 'transaction-history.json',
         }).as('transactionHistory');
 
-        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@loginBtnSignOut').should('exist').and('be.visible').contains('Sign out');
         cy.get('@dashboardPaymentContainer').should('exist').and('be.visible');
 
         cy.get('@dashboardPaymentContainer').find('h3').contains('Payments History');
