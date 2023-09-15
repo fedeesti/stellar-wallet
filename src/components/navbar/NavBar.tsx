@@ -10,7 +10,10 @@ function NavBar() {
   };
 
   return (
-    <nav className="bg-stellar-bg-primary p-12 flex justify-between" data-cy="nav-container">
+    <nav
+      className="bg-stellar-bg-primary py-8 px-4 sm:py-12 sm:px-12 flex justify-between flex-wrap"
+      data-cy="nav-container"
+    >
       <div className="flex items-center gap-2">
         <a href="https://www.stellar.org/" className="flex items-center" data-cy="nav-logo-link">
           <svg
@@ -32,9 +35,9 @@ function NavBar() {
         </div>
       </div>
       {publicKey && (
-        <div className="flex items-center" data-cy="nav-login-container">
+        <>
           <button
-            className="px-6 py-4 text-xs flex flex-row items-center gap-2 hover:opacity-70"
+            className="text-xs flex flex-row items-center justify-center gap-2 order-1 min-w-full mt-6 sm:mt-0 sm:justify-end sm:grow sm:pr-4 sm:order-none sm:min-w-[auto] hover:opacity-70"
             data-cy="nav-login-btn-copy"
             onClick={copyToClipboard}
           >
@@ -66,13 +69,13 @@ function NavBar() {
             </svg>
           </button>
           <button
-            className="border-l-2 border-l-stellar-border-primary pl-4 font-semibold text-stellar-link hover:text-stellar-link-hover"
+            className="sm:border-l-2 border-l-stellar-border-primary pl-4 font-semibold text-stellar-link hover:text-stellar-link-hover"
             data-cy="nav-btn-sign-out"
             onClick={onLogout}
           >
             Sign out
           </button>
-        </div>
+        </>
       )}
     </nav>
   );
