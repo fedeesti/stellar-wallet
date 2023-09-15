@@ -9,11 +9,13 @@ function DashboardWallet() {
 
   return (
     <main
-      className="text-stellar-text-primary bg-stellar-bg-primary overflow-hidden"
+      className="text-stellar-text-primary bg-stellar-bg-primary flex justify-center overflow-hidden"
       data-cy="dashboard-main-container"
     >
-      <Balance publicKey={publicKey as string} balance={balance as string} />
-      <TransactionHistory transactions={transactions} />
+      <div className="w-full max-w-7xl">
+        <Balance publicKey={publicKey as string} balance={balance as string} />
+        <TransactionHistory transactions={transactions} />
+      </div>
     </main>
   );
 }

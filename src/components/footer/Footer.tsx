@@ -1,7 +1,10 @@
 function Footer() {
   return (
-    <footer className="px-4 sm:px-12 bg-stellar-bg-primary text-white" data-cy="footer-container">
-      <div className="w-full pb-12 pt-6 border-t border-stellar-border-secondary flex items-center justify-between">
+    <footer
+      className="px-4 sm:px-12 bg-stellar-bg-primary text-white flex justify-center"
+      data-cy="footer-container"
+    >
+      <div className="w-full max-w-7xl pb-12 pt-6 border-t border-stellar-border-secondary flex items-center justify-between">
         <ul className="flex items-center font-bold hover:text-stellar-text-secondary">
           <li data-cy="footer-terms-of-service-title">
             <a
