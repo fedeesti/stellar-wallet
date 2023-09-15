@@ -29,21 +29,21 @@ export async function loadTransactionHistory(
   signerAccountPublicKey: string,
 ): Promise<Transaction[]> {
   try {
-    const transactionList: Transaction[] = [];
+    const transactions: Transaction[] = [];
     const transactionLimit = 100;
 
-    const transaction: ServerApi.CollectionPage<ServerApi.PaymentOperationRecord> = await server
+    const { records }: ServerApi.CollectionPage<ServerApi.PaymentOperationRecord> = await server
       .payments()
       .forAccount(signerAccountPublicKey)
       .order('desc')
       .limit(transactionLimit)
       .call();
 
-    transaction.records.forEach((record) => {
-      transactionList.push(mapStellarResponseToTransaction(signerAccountPublicKey, record));
+    records.forEach((record) => {
+      transactions.push(mapStellarResponseToTransaction(signerAccountPublicKey, record));
     });
 
-    return transactionList;
+    return transactions;
   } catch (error) {
     throw new Error(MessageError.ERROR_TRANSACTION_HISTORY);
   }
