@@ -7,7 +7,10 @@ interface IProps {
 function TransactionHistory(transactions: IProps) {
   const { transactions: records } = transactions;
   return (
-    <section className="bg-[#292d3e] px-8 mb-12" data-cy="dashboard-payment-container">
+    <section
+      className="bg-stellar-bg-primary px-4 sm:px-8 mb-12"
+      data-cy="dashboard-payment-container"
+    >
       <h3 className="mb-4 font-medium text-4xl">Payments History</h3>
       {records.length === 0 ? (
         <p className="text-base mb-8" data-cy="dashboard-payment-info-without-transaction">
@@ -23,8 +26,11 @@ function TransactionHistory(transactions: IProps) {
             data-cy="dashboard-payment-table-container"
           >
             <thead className="text-xs text-gray-700 uppercase">
-              <tr className="border-b border-[#3a3e4d]" data-cy="dashboard-payment-thead">
-                <th scope="col" className="px-6 py-4 bg-[#303448]">
+              <tr
+                className="border-b border-stellar-border-primary"
+                data-cy="dashboard-payment-thead"
+              >
+                <th scope="col" className="px-6 py-4 bg-stellar-bg-secondary">
                   DATE/TIME
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -41,8 +47,13 @@ function TransactionHistory(transactions: IProps) {
             <tbody data-cy="dashboard-payment-tbody">
               {records.map((transaction: Transaction) => {
                 return (
-                  <tr className="border-b border-[#3a3e4d]" key={transaction.operationId}>
-                    <td className="px-6 py-4 text-sm bg-[#303448]">{transaction.date}</td>
+                  <tr
+                    className="border-b border-stellar-border-primary"
+                    key={transaction.operationId}
+                  >
+                    <td className="px-6 py-4 text-sm bg-stellar-bg-secondary">
+                      {transaction.date}
+                    </td>
                     <td className="px-6 py-4 text-xs flex flex-row items-center gap-2">
                       <div className="w-11 h-11 bg-stellar-bg-secondary border border-stellar-border-primary rounded-full flex items-center justify-center">
                         <img
