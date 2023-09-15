@@ -335,7 +335,7 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="dashboard-balance-information"]').as('balanceInformation');
         cy.get('[data-cy="dashboard-balance-public-key-container"]').as('balancePublicKey');
       });
-      it('Should show your balance in XLM', () => {
+      it('Should show user balance in XLM', () => {
         cy.get('@navbarLoginContainer').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-main-container"]').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-balance-section-container"]').should('exist').and('be.visible');
