@@ -7,7 +7,7 @@ import { getRandomProfile } from '../../utils/profile';
 export default function mapStellarResponseToTransaction(
   publicKey: string,
   stellarResponse: ServerApi.OperationRecord,
-) {
+): Transaction {
   const {
     id,
     created_at,
@@ -30,6 +30,7 @@ export default function mapStellarResponseToTransaction(
   );
 
   const profile = getRandomProfile();
+  const date = shortenDate(created_at);
 
-  return new Transaction(shortenDate(created_at), profile, address, amount, id);
+  return new Transaction(date, profile, address, amount, id);
 }
