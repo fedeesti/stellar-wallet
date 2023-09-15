@@ -5,10 +5,11 @@ interface IProps {
 }
 
 function TransactionHistory(transactions: IProps) {
+  const { transactions: records } = transactions;
   return (
     <section className="bg-[#292d3e] px-8 mb-12" data-cy="dashboard-payment-container">
       <h3 className="mb-4 font-medium text-4xl">Payments History</h3>
-      {transactions.transactions.length === 0 ? (
+      {records.length === 0 ? (
         <p className="text-base mb-8" data-cy="dashboard-payment-info-without-transaction">
           There are no payments to show
         </p>
@@ -38,7 +39,7 @@ function TransactionHistory(transactions: IProps) {
               </tr>
             </thead>
             <tbody data-cy="dashboard-payment-tbody">
-              {transactions.transactions.map((transaction: Transaction) => {
+              {records.map((transaction: Transaction) => {
                 return (
                   <tr className="border-b border-[#3a3e4d]" key={transaction.operationId}>
                     <td className="px-6 py-4 text-sm bg-[#303448]">{transaction.date}</td>
