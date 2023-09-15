@@ -10,7 +10,7 @@ function useLoadAccount(publicKey: string) {
     let accountBalance: string = await findNativeBalance(publicKey);
     const accountTransactions: Transaction[] = await loadTransactionHistory(publicKey);
 
-    accountBalance = accountBalance ? accountBalance : '0';
+    accountBalance = accountBalance || '0';
 
     setBalance(accountBalance);
     setTransactions(accountTransactions);
