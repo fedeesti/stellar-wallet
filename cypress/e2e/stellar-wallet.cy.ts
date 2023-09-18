@@ -372,7 +372,7 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="dashboard-payment-container"]').as('dashboardPaymentContainer');
       });
       it('Should show a message that there are no transactions', () => {
-        cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
+        cy.intercept('GET', `${URL_TRANSACTION_HISTORY}`, {
           fixture: 'without-transaction-history.json',
         });
 
