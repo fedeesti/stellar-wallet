@@ -6,7 +6,7 @@ import { getRandomProfile } from '../../utils/profile';
 
 export default function mapStellarResponseToTransaction(
   publicKey: string,
-  stellarResponse: ServerApi.OperationRecord,
+  stellarResponse: ServerApi.PaymentOperationRecord,
 ): Transaction {
   const {
     id,
@@ -15,7 +15,6 @@ export default function mapStellarResponseToTransaction(
     type,
     source_account,
     to,
-    starting_balance,
     asset_type,
   } = stellarResponse;
 
@@ -26,7 +25,6 @@ export default function mapStellarResponseToTransaction(
     to,
     source_account,
     recordAmount,
-    starting_balance,
   );
 
   const profile = getRandomProfile();

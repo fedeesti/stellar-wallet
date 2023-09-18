@@ -13,10 +13,10 @@ export default function getTransactionAmountAndAddress(
   destination: string,
   account: string,
   recordAmount: string,
-  startingbalance: string,
 ): ITransactionAmountAndAddress {
   let amount = '';
   let address = '';
+  const STARTING_BALANCE = '10000.0000000';
 
   if (
     type === TransactionType.PAYMENT_TYPE &&
@@ -38,7 +38,7 @@ export default function getTransactionAmountAndAddress(
 
   if (type === TransactionType.CREATE_ACCOUNT_TYPE) {
     address = 'Fund';
-    amount = `+${startingbalance} XLM`;
+    amount = `+${STARTING_BALANCE} XLM`;
   }
 
   return { address, amount };
