@@ -19,10 +19,10 @@ function Balance({ publicKey, balance }: IProps) {
 
   return (
     <section
-      className="my-8 p-8 bg-stellar-bg-secondary"
+      className="mb-8 px-4 py-8 sm:px-8 bg-stellar-bg-secondary"
       data-cy="dashboard-balance-section-container"
     >
-      <div className="px-12 my-o mx-auto max-w-7xl w-full">
+      <div className="my-o mx-auto max-w-7xl w-full">
         <div className="flex flex-col items-center lg:flex-row lg:justify-between">
           <div className="mb-8 lg:mb-0 text-center" data-cy="dashboard-balance-information">
             <h3 className="mb-2 font-normal text-4xl">Your Balance</h3>
