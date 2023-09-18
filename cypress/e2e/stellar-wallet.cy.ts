@@ -1,5 +1,15 @@
 /// <reference types="cypress" />
 
+import {
+  URL_HORIZON,
+  URL_TRANSACTION_HISTORY,
+  amount,
+  destinationId,
+  privateKey,
+  signerAccountPublicKey,
+  urlAccountViewer,
+} from '../support/constants';
+
 beforeEach(() => {
   cy.visit(Cypress.env('base_url'));
 });
@@ -14,6 +24,7 @@ describe('Stellar Wallet management', () => {
   describe('UI Layout', () => {
     it('Should show a navbar', () => {
       cy.get('[data-cy="nav-container"]').should('exist').and('be.visible');
+      cy.get('[data-cy="nav-login-container"]').should('not.exist');
       cy.get('[data-cy="nav-logo"]').should('be.visible');
       cy.get('[data-cy="nav-logo-link"]')
         .should('be.visible')
@@ -149,8 +160,6 @@ describe('Stellar Wallet management', () => {
         cy.get('@loginPrivateKeyContainer').should('not.exist');
       });
       it('Should show the login modal when clicking on continue in the warning modal', () => {
-        const urlAccountViewer = 'https://accountviewer.stellar.org';
-
         cy.get('@warningAcceptTerms').find('input').check();
         cy.get('@warningBtnContinue').click();
 
@@ -204,8 +213,6 @@ describe('Stellar Wallet management', () => {
         }
       });
       it('Should log in successfully', () => {
-        const privateKey = 'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF';
-
         cy.get('@warningAcceptTerms').find('input').check();
         cy.get('@warningBtnContinue').click();
 
@@ -213,6 +220,7 @@ describe('Stellar Wallet management', () => {
         cy.get('[data-cy="login-secret-key-btn-connect"]').click();
 
         cy.url().should('include', '/dashboard');
+        cy.get('[data-cy="nav-login-container"]').should('exist').and('be.visible');
       });
     });
     describe('Generate key pair for a new account', () => {
@@ -289,23 +297,46 @@ describe('Stellar Wallet management', () => {
 
   describe('Dashboard Wallet', () => {
     beforeEach(() => {
-      const privateKey = 'SANEPI74NFPALZ4JOUTRBOUJGVFOFRKRQT2BZN3UR5ULVEN4FJKT7GRF';
-
       cy.get('@connectWithPrivateKey').click();
       cy.get('[data-cy="warning-accept-terms"]').find('input').check();
       cy.get('[data-cy="warning-btn-continue"]').click();
 
       cy.get('[data-cy="login-secret-key-form"]').find('input').type(privateKey);
+      cy.intercept(`${URL_HORIZON}/accounts/${signerAccountPublicKey}`, {
+        fixture: 'signer-account.json',
+      });
       cy.get('[data-cy="login-secret-key-btn-connect"]').click();
 
       cy.get('[data-cy="dashboard-balance-btn-send"]').as('btnSendPayment');
+      cy.get('[data-cy="nav-login-container"]').as('navbarLoginContainer');
+      cy.get('[data-cy="nav-btn-sign-out"]').as('navBtnLogOut');
+    });
+    describe('Login container on Navbar', () => {
+      it('Should show a button to copy the public key and another to sign out', () => {
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('[data-cy="nav-login-btn-copy"]').should('exist').and('be.visible');
+        cy.get('[data-cy="nav-account-icon"]').should('exist').and('be.visible');
+        cy.get('[data-cy="nav-login-public-key"]').should('exist').and('be.visible');
+        cy.get('@navBtnLogOut').should('exist').and('be.visible').contains('Sign out');
+      });
+      it('Should log out of the account', () => {
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.url().should('include', '/dashboard');
+
+        cy.get('@navBtnLogOut').click();
+
+        cy.url().should('not.include', '/dashboard');
+        cy.get('@navbarLoginContainer').should('not.exist');
+        cy.get('@homeContainer').should('exist').and('be.visible');
+      });
     });
     describe('Balance information section', () => {
       beforeEach(() => {
         cy.get('[data-cy="dashboard-balance-information"]').as('balanceInformation');
         cy.get('[data-cy="dashboard-balance-public-key-container"]').as('balancePublicKey');
       });
-      it('Should show your balance in XLM', () => {
+      it('Should show user balance in XLM', () => {
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-main-container"]').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-balance-section-container"]').should('exist').and('be.visible');
         cy.get('@balanceInformation').should('exist').and('be.visible');
@@ -334,16 +365,33 @@ describe('Stellar Wallet management', () => {
     });
     describe('Payments History', () => {
       beforeEach(() => {
-        cy.get('[data-cy="dashboard-payment-header-container"]').as('paymentHeader');
+        cy.get('[data-cy="dashboard-payment-container"]').as('dashboardPaymentContainer');
+      });
+      it('Should show a message that there are no transactions', () => {
+        cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
+          fixture: 'without-transaction-history.json',
+        });
+
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@dashboardPaymentContainer').should('exist').and('be.visible');
+
+        cy.get('@dashboardPaymentContainer').find('h3').contains('Payments History');
+        cy.get('@dashboardPaymentContainer').find('p').contains('There are no payments to show');
       });
       it('Should show your payments history', () => {
-        const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'MEMO', 'OPERATION ID'];
+        const paymentTableHeader = ['DATE/TIME', 'ADDRESS', 'AMOUNT', 'OPERATION ID'];
 
-        cy.get('[data-cy="dashboard-payment-container"]').should('exist').and('be.visible');
+        cy.intercept(`${URL_TRANSACTION_HISTORY}`, {
+          fixture: 'transaction-history.json',
+        }).as('transactionHistory');
 
-        cy.get('@paymentHeader').should('exist').and('be.visible');
-        cy.get('@paymentHeader').find('h3').contains('Payments History');
-        cy.get('@paymentHeader').find('p').contains('Hiding payments smaller than 0.5 XLM');
+        cy.get('@navbarLoginContainer').should('exist').and('be.visible');
+        cy.get('@dashboardPaymentContainer').should('exist').and('be.visible');
+
+        cy.get('@dashboardPaymentContainer').find('h3').contains('Payments History');
+        cy.get('@dashboardPaymentContainer')
+          .find('p')
+          .contains('Hiding payments smaller than 0.5 XLM');
 
         cy.get('[data-cy="dashboard-payment-table-container"]').should('exist').and('be.visible');
         cy.get('[data-cy="dashboard-payment-thead"]')
@@ -352,7 +400,17 @@ describe('Stellar Wallet management', () => {
             const texts = Cypress._.map(th, 'innerText');
             expect(texts, 'headings').to.deep.equal(paymentTableHeader);
           });
-        cy.get('[data-cy="dashboard-payment-tbody"]').find('td').should('have.length', 5);
+        cy.wait('@transactionHistory');
+        cy.get('[data-cy="dashboard-payment-tbody"]')
+          .should('exist')
+          .and('be.visible')
+          .as('paymentTableBody');
+        cy.get('@paymentTableBody').find('tr').should('have.length', 3);
+
+        cy.get('[data-cy="dashboard-payment-tbody-icon-profile"]')
+          .should('exist')
+          .and('be.visible')
+          .and('have.attr', 'alt', 'Transaction icon');
       });
     });
     describe('Send Payment', () => {
@@ -431,10 +489,6 @@ describe('Stellar Wallet management', () => {
         cy.get('@destionationIdContainer').find('input').clear();
       });
       it('Should send payments with private key successfully', () => {
-        const signerAccountPublicKey = 'GA3I3AZQQXV7PSGOZ74JLDV7VEIUDEBMWHUTTTZLIBW3ZIJFWORTL2HF';
-        const destinationId = 'GBLIWVH4PMJDPGOO7BOHI53GTTL6XXL6EMQP7USWTQOWOK4UZEGDB2S3';
-        const amount = '10';
-
         cy.intercept('POST', `${Cypress.env('URL_HORIZON')}/transactions`, {
           fixture: 'transaction-success.json',
         });
@@ -450,6 +504,7 @@ describe('Stellar Wallet management', () => {
         cy.get('@btnSendPayment').click();
 
         cy.wait(500);
+        cy.url().should('include', '/dashboard');
         cy.get('[data-cy="modal-container"]').should('not.exist');
       });
     });

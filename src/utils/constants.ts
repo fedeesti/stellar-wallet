@@ -15,6 +15,12 @@ export const errorPrivateKeyMessage = {
   invalid: 'Invalid secret key. Secret keys are uppercase and begin with the letter "S."',
 };
 
+export enum TransactionType {
+  PAYMENT_TYPE = 'payment',
+  CREATE_ACCOUNT_TYPE = 'create_account',
+  ASSET_NATIVE = 'native',
+}
+
 export enum TransactionError {
   DESTINATION_ID_EMPTY = 'Please enter a valid Stellar or Federated address',
   INVALID_DESTINATION_ID = 'Stellar address or public key is invalid. Public keys are uppercase and begin with letter "G"',

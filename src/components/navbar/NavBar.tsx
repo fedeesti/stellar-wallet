@@ -1,6 +1,16 @@
+import useAuthPublicKey from '../../hooks/useAuthPublicKey';
+import { getRandomProfile } from '../../utils/profile';
+import { getShorted } from '../../utils/shortenString';
+
 function NavBar() {
+  const { publicKey, onLogout } = useAuthPublicKey();
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(publicKey as string);
+  };
+
   return (
-    <nav className="bg-stellar-bg-primary p-12" data-cy="nav-container">
+    <nav className="bg-stellar-bg-primary p-12 flex justify-between" data-cy="nav-container">
       <div className="flex items-center gap-2">
         <a href="https://www.stellar.org/" className="flex items-center" data-cy="nav-logo-link">
           <svg
@@ -21,6 +31,49 @@ function NavBar() {
           Account Viewer
         </div>
       </div>
+      {publicKey && (
+        <div className="flex items-center" data-cy="nav-login-container">
+          <button
+            className="px-6 py-4 text-xs flex flex-row items-center gap-2 hover:opacity-70"
+            data-cy="nav-login-btn-copy"
+            onClick={copyToClipboard}
+          >
+            <div className="w-11 h-11 bg-stellar-bg-secondary border border-stellar-border-primary rounded-full flex items-center justify-center">
+              <img
+                src={getRandomProfile()}
+                alt="Transaction icon"
+                className="w-[45%] h-[45%]"
+                data-cy="nav-account-icon"
+              />
+            </div>
+            <p className="font-semibold text-stellar-text-primary" data-cy="nav-login-public-key">
+              {getShorted(publicKey as string)}
+            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-5 h-5 text-stellar-link"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+            </svg>
+          </button>
+          <button
+            className="border-l-2 border-l-stellar-border-primary pl-4 font-semibold text-stellar-link hover:text-stellar-link-hover"
+            data-cy="nav-btn-sign-out"
+            onClick={onLogout}
+          >
+            Sign out
+          </button>
+        </div>
+      )}
     </nav>
   );
 }

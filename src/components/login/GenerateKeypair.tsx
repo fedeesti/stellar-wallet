@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { storedKeypairErrorMessage } from '../../utils/constants';
-import { createAccount } from '../../service/createAccount ';
+import { createAccount } from '../../service/account';
 import { IKeypair } from '../../types/types';
 
 interface initialErrorState {

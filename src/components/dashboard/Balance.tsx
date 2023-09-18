@@ -3,9 +3,10 @@ import SendPayment from '../payments/SendPayment';
 
 interface IProps {
   publicKey: string;
+  balance: string;
 }
 
-function Balance({ publicKey }: IProps) {
+function Balance({ publicKey, balance }: IProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
@@ -25,7 +26,7 @@ function Balance({ publicKey }: IProps) {
         <div className="flex flex-col items-center lg:flex-row lg:justify-between">
           <div className="mb-8 lg:mb-0 text-center" data-cy="dashboard-balance-information">
             <h3 className="mb-2 font-normal text-4xl">Your Balance</h3>
-            <p className="text-4xl font-medium mt-2">0 Lumens (XLM)</p>
+            <p className="text-4xl font-medium mt-2">{balance} Lumens (XLM)</p>
           </div>
           <div className="flex items-center gap-6" data-cy="dashboard-balance-btn-container">
             <button

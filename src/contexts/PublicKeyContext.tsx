@@ -2,7 +2,12 @@ import { ReactNode, createContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getPublicKeyFromPrivateKey } from '../service/stellar';
 import { IPublicKeyContext } from '../types/types';
-import { encrypt } from '../service/security/security';
+import { decrypt, encrypt } from '../service/security/security';
+import {
+  getFromLocalStorage,
+  removeFromLocalStorage,
+  saveInLocalStorage,
+} from '../service/storage/storage';
 
 interface IProps {
   children: ReactNode;
@@ -17,9 +22,17 @@ const INITIAL_VALUE_CONTEXT: IPublicKeyContext = {
 export const PublicKeyContext = createContext<IPublicKeyContext>(INITIAL_VALUE_CONTEXT);
 
 export default function AuthPublicKeyProvider({ children }: IProps) {
-  const [publicKey, setPublicKey] = useState<string | null>(null);
+  const SECRET_KEY = import.meta.env.VITE_SAVE_PRIVATE_KEY;
+  const PUBLIC_KEY = import.meta.env.VITE_SAVE_PUBLIC_KEY;
+
+  const encryptedPublicKey = getFromLocalStorage(PUBLIC_KEY);
+
+  if (encryptedPublicKey) {
+    INITIAL_VALUE_CONTEXT.publicKey = decrypt(encryptedPublicKey);
+  }
+
+  const [publicKey, setPublicKey] = useState<string | null>(INITIAL_VALUE_CONTEXT.publicKey);
   const navigate = useNavigate();
-  const SECRET_KEY = 'secret';
 
   const handleLogin = (key: string) => {
     const initialLetterOfPrivateKey = 'S';
@@ -27,12 +40,14 @@ export default function AuthPublicKeyProvider({ children }: IProps) {
 
     if (key.charAt(0) === initialLetterOfPrivateKey) {
       const accountPublicKey: string = getPublicKeyFromPrivateKey(key);
-      localStorage.setItem(SECRET_KEY, encrypt(key));
+      saveInLocalStorage(SECRET_KEY, encrypt(key));
+      saveInLocalStorage(PUBLIC_KEY, encrypt(accountPublicKey));
       setPublicKey(accountPublicKey);
     }
 
     if (key.charAt(0) === initialLetterOfPublicKey) {
       setPublicKey(key);
+      saveInLocalStorage(PUBLIC_KEY, encrypt(key));
     }
 
     navigate('/dashboard');
@@ -40,7 +55,8 @@ export default function AuthPublicKeyProvider({ children }: IProps) {
 
   const handleLogout = () => {
     setPublicKey(null);
-    localStorage.removeItem(SECRET_KEY);
+    removeFromLocalStorage(PUBLIC_KEY);
+    removeFromLocalStorage(SECRET_KEY);
   };
 
   const value: IPublicKeyContext = {

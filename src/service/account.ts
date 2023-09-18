@@ -1,5 +1,5 @@
 import { Keypair } from 'stellar-sdk';
-import { Keypair as IKeypair } from '../types/types';
+import { IKeypair } from '../types/types';
 
 export function createAccount(): IKeypair {
   const randomPair = Keypair.random();
